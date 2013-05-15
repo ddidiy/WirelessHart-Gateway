@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+
+  <title></title>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=8" />
+  <link href="styles/default.css" rel="stylesheet" type="text/css" />    
+  <script type="text/javascript" src="jsolait/jsolait.js"></script>
+  <script type="text/javascript" src="scripts/template.js"></script>
+  <script type="text/javascript" src="scripts/login.js"></script>
+  <script type="text/javascript" src="scripts/appsettings.js"></script>
+  <script type="text/javascript" src="scripts/common.js"></script>
+  <script type="text/javascript" src="sql/devicedal.js"></script>
+  <script type="text/javascript" src="scripts/customicons.js"></script>
+  <script type="text/javascript" src="scripts/device.js"></script>
+ 
+
+   <!--[if (lte IE 6)|(gte IE 8)]>
+  <style type="text/css">
+     #outer {height:100%;display:table;}
+  </style>
+  <![endif]-->
+
+</head>
+
+<body onload="InitCustomIconsPage();">
+
+<div id="outer">
+    <div id="inner">
+        <div id="header"></div>
+
+        <div id="content">
+           	<div id="columnB"></div>
+
+        <!-- START PAGE CONTENT -->
+        
+        	<div id="columnA">
+		    <h2>Custom Icons</h2>
+
+		    <table>
+              <tr>
+                <td colspan="4">
+                <table cellpadding="0" cellspacing="0" width="550px" border="0">
+                    <tr>
+                        <td>
+                            <input type="button" id="btnAddIcon" name="btnAddIcon" value="Add Icon" onClick="AddIcon()"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+		                <div id="tblCustomIcons" style="text-align: center;"></div>
+		                <textarea id="customicons_jst" cols="0" rows="0" style="display:none;">
+		                <table cellpadding="0" cellspacing="0" class="containerDiv" width="500px" align="left">
+		                <tr>
+			              <td colspan="4" align="left">
+				            <table width="100%" cellpadding="0" cellspacing="0" border="0">
+					            <tr>								
+						            <td class="tableHeader" style="width: 300px;" align="left">Model</td>
+						            <td class="tableHeader" style="width: 150px;" align="left">Role</td>
+    					            <td class="tableHeader" style="width: 50px;" align="left">Icon</td>
+						            <td class="tableHeader" style="width: 50px;">&nbsp;</td>
+					            </tr>
+            					
+                                {for ci in customicons}
+            					
+					            <tr>
+						            <td class="${ci.cellClass}" style="width: 300px;" align="left">${ci.ModelAscii}</td>
+						            <td class="${ci.cellClass}" style="width: 150px;" align="left">${ci.DeviceRoleName}</td>
+						            <td class="${ci.cellClass}" style="width: 50px;" align="left">${ci.Icon}</td>
+						            <td class="${ci.cellClass}" style="width: 50px;" align="center">${ci.DelAction}</td>
+            		            </tr>
+                        		
+            		            {/for}
+
+				            </table>
+ 			              </td>
+    		            </tr>
+    		            </table>
+		                </textarea>  
+        	            </td>
+                    </tr>
+                </table>
+                </td>
+            </tr>
+	        <tr>
+			    <td class="spacer" colspan="3"></td>
+		    </tr>
+		    </table>
+		
+		  	</div>
+		  	
+        <!-- END PAGE CONTENT -->
+
+        </div>
+    </div>
+</div>
+
+<div id="footer"></div>
+
+</body>
+</html>

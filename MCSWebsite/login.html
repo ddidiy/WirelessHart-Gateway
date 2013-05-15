@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+
+  <title></title>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=8" />
+  <link href="styles/default.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="scripts/appsettings.js"></script>
+  <script type="text/javascript" src="jsolait/jsolait.js"></script>  
+  <script type="text/javascript" src="scripts/common.js"></script>
+  <script type="text/javascript" src="scripts/login.js"></script>  
+  <script type="text/javascript" src="scripts/validation.js"></script>
+  
+  <!--[if (lte IE 6)|(gte IE 8)]>
+  <style type="text/css">
+     #outer {height:100%;display:table;}
+  </style>
+  <![endif]-->
+  
+</head>
+
+<script type="text/javascript">    
+if (EnableSSL && location.protocol.toLowerCase() == "http:") {
+    location.href = location.href.replace("http:","https:");
+}
+</script>
+
+<body onload="InitLoginPage();">
+
+<div id="outer">
+    <div id="inner">
+        <div id="header"></div>
+
+        <!-- START PAGE CONTENT -->
+         
+        <div class="contentLogin">
+	    <table cellpadding="0" cellspacing="0" class="containerDiv" width="310px" style="margin-left: auto; margin-right: auto;">
+		<tr>
+			<td colspan="2" align="left">
+				<table width="100%" cellpadding="0" cellspacing="0">
+					<tr>								
+						<td class="windowHeader">Login</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		
+		<tr>
+			<td class="spacer" colspan="2"></td> 
+		</tr>	
+		<tr>
+			<td colspan="2" align="center" class="opResultRed">
+				 <span id="spnSessionExpired" style="display: none;">Invalid session !</span>
+			</td>
+		</tr>			
+
+		<tr>
+			<td class="spacer" colspan="2"></td>
+		</tr>				
+		<tr>
+			<td class="labels" align="left">
+				User Name
+			</td>
+			<td align="left">
+				<input type="text" id="txtUser" name="txtUser" maxlength="50" class="inputText" style="width:150px" onkeypress="Login(event);" />
+			</td>
+			</tr>
+			<tr>
+				<td class="labels" align="left">
+					Password
+				</td>
+			<td align="left">
+				<input type="password" id="txtPassword" name="txtPassword" maxlength="50" class="inputText" style="width:150px" onkeypress="Login(event);" />
+			</td>
+		</tr>	
+		<tr>
+			<td class="spacer" colspan="2"></td>
+		</tr>	
+		<tr>
+			<td colspan="2" align="center" class="listCell">
+				<input type="button" id="btnSubmit" name="btnSubmit" value="Login" class="button" onclick="Login(event);" />
+			</td>
+		</tr>				
+		<tr style="display: none;">
+			<td colspan="2" align="right" class="listCell">
+				<a href="#" class="listLink">Forgot password</a>&nbsp;
+			</td>
+		</tr>
+        </table>
+        </div>        	
+		  	
+        <!-- END PAGE CONTENT -->
+
+    </div>
+</div>
+
+<div id="footer"></div>
+
+</body>
+</html>

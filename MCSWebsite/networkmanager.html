@@ -1,0 +1,179 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+
+  <title></title>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=8" />
+  <link href="styles/default.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="scripts/login.js"></script>
+  <script type="text/javascript" src="scripts/validation.js"></script>
+  <script type="text/javascript" src="scripts/appsettings.js"></script>
+  <script type="text/javascript" src="scripts/networkmanager.js"></script>
+  <script type="text/javascript" src="jsolait/jsolait.js"></script>
+  <script type="text/javascript" src="scripts/common.js"></script> 
+
+  <!--[if (lte IE 6)|(gte IE 8)]>
+  <style type="text/css">
+     #outer {height:100%;display:table;}
+  </style>
+  <![endif]-->
+
+</head>
+
+<body onload="InitNetworkManagerPage();">
+
+<div id="outer">
+    <div id="inner">
+        <div id="header"></div>
+
+        <div id="content">
+           	<div id="columnB"></div>
+
+        <!-- START PAGE CONTENT -->
+        
+        <div id="columnA">
+		<h2>Network Manager</h2>
+
+		<table cellpadding="0" cellspacing="0" class="containerDiv" width="400px">
+		   <tr>
+			 <td colspan="2" align="left">
+				<table width="100%" cellpadding="0" cellspacing="0">
+					<tr>								
+						<td class="windowHeader">General Settings</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td class="spacer" colspan="2"></td>
+		</tr>						
+		<tr>
+            <td class="labels" align="left">Network Manager Tag</td>
+            <td align="left">
+                <input type="text" id="txtNetworkTag" name="txtNetworkTag" class="inputText" maxlength="32"  title="Format: String with maximum 32 charcters" />
+            </td>
+        </tr>
+    	<tr>
+			<td class="spacer" colspan="2"></td>
+		</tr>
+		<tr>
+			<td class="labels" align="left" colspan="2" style="font-size :9px;">
+				*The Network Manager must be restarted for the new settings to take effect.
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" align="left">
+				<table width="100%" cellpadding="0" cellspacing="0">
+					<tr>								
+						<td class="windowHeader">Operational Settings</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+			<tr>
+			<td class="spacer" colspan="2"></td>
+		</tr>				
+		<tr>
+			<td class="labels" align="left">Max Device Number (NSD)</td>
+			<td align="left">
+				<input type="text" id="txtMaxDeviceNumber" name="txtMaxDeviceNumber" maxlength="2" class="inputText" 
+                title="Format: Integer in range [1-50]. The maximum number of Devices that are allowed on the system(on all subnets)." />
+			</td>
+		</tr>
+		<tr>
+			<td class="labels" align="left">Management Bandwidth (s)</td>
+			<td align="left">
+			    <input type="text" id="txtManagementBandwidth" name="txtManagementBandwidth" maxlength="2" class="inputText" 
+                title="Format: Integer in range [1-64] seconds. The allocated bandwidth between NM and devices for maintenance."/>
+			</td>
+		</tr>
+		<tr>
+			<td class="labels" align="left">Gateway Bandwidth (s)</td>
+			<td align="left">
+                <input type="text" id="txtGatewayBandwidth" name="txtGatewayBandwidth" maxlength="2" class="inputText" 
+                title="Format: Integer in range [1-64] seconds. The allocated bandwidth between GW and devices for maintenance." />
+			</td>
+		</tr>	
+		<tr>
+			<td class="labels" align="left">Join Bandwidth (s)</td>
+			<td align="left">
+                <input type="text" id="txtJoinBandwidth" name="txtJoinBandwidth" maxlength="2" class="inputText" 
+                title="Format: Integer in range [1-64] seconds. The allocated bandwidth for the shared join links." />
+			</td>
+		</tr>	
+		<tr>
+			<td class="labels" align="left">Health Reports Period (m)</td>
+			<td align="left">
+                <input type="text" id="txtHealthReportsPeriod" name="txtHealthReportsPeriod" maxlength="4" class="inputText" 
+                title="Format: Integer in range [1-1440] minutes. The period at which devices will send health reports (in minutes)." />
+			</td>
+		</tr>
+		<tr>
+			<td class="labels" align="left">Discovery Reports Period (m)</td>
+			<td align="left">
+                <input type="text" id="txtDiscoveryReportsPeriod" name="txtDiscoveryReportsPeriod" maxlength="4" class="inputText" 
+                title="Format: Integer in range [1-1440] minutes. The period at which devices will send discovery reports (in minutes)." />
+			</td>
+		</tr>
+		<tr>
+			<td class="labels" align="left">Keep Alive Period (s)</td>
+			<td align="left">
+                <input type="text" id="txtKeepAlivePeriod" name="txtKeepAlivePeriod" maxlength="2" class="inputText" 
+                title="Format: Integer in range [1-64] seconds. The health report publish period (in seconds)." />
+			</td>
+		</tr>
+		<tr>
+			<td class="labels" align="left" valign="top">Channels</td>
+			<td align="left" class="checklabel">
+                11<input type="checkbox" id="chkChannel0" name="chkChannel0" />
+                12<input type="checkbox" id="chkChannel1" name="chkChannel1" />
+                13<input type="checkbox" id="chkChannel2" name="chkChannel2" />
+                14<input type="checkbox" id="chkChannel3" name="chkChannel3" /><br />
+                15<input type="checkbox" id="chkChannel4" name="chkChannel4" />
+                16<input type="checkbox" id="chkChannel5" name="chkChannel5" />
+                17<input type="checkbox" id="chkChannel6" name="chkChannel6" />
+                18<input type="checkbox" id="chkChannel7" name="chkChannel7" /><br />
+                19<input type="checkbox" id="chkChannel8" name="chkChannel8" />
+                20<input type="checkbox" id="chkChannel9" name="chkChannel9" />
+                21<input type="checkbox" id="chkChannel10" name="chkChannel10" />
+                22<input type="checkbox" id="chkChannel11" name="chkChannel11" /><br />
+                23<input type="checkbox" id="chkChannel12" name="chkChannel12" />
+                24<input type="checkbox" id="chkChannel13" name="chkChannel13" />
+                25<input type="checkbox" id="chkChannel14" name="chkChannel14" />
+			</td>
+		</tr>	
+    	<tr>
+			<td class="spacer" colspan="2"></td>
+		</tr>
+		<tr>
+			<td colspan="2" align="left">
+				<table width="100%" cellpadding="0" cellspacing="0">
+					<tr>								
+						<td colspan="2" align="center">
+						<input type="button" id="btnSave" name="btnSave" value="Save" class="button" onclick="SaveData();" onblur="ClearOperationResult('spnOperationResult')" />
+						<input type="button" id="btnCancel" name="btnCancel" value="Cancel" class="button" onclick="GetData();" />
+					</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" align="center">
+		      <span id="spnOperationResult"></span>
+            </td>
+		</tr>
+		</table>
+    	</div>
+		  	
+        <!-- END PAGE CONTENT -->
+
+        </div>
+    </div>
+</div>
+
+<div id="footer"></div>
+
+</body>
+</html>

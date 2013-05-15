@@ -1,0 +1,196 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+
+  <title></title>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=8" />
+  <link href="styles/default.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="scripts/login.js"></script>
+  <script type="text/javascript" src="scripts/validation.js"></script>
+  <script type="text/javascript" src="scripts/appsettings.js"></script>
+  <script type="text/javascript" src="graphics/popup.js"></script>
+  <script type="text/javascript" src="scripts/mhconfig.js"></script>
+  <script type="text/javascript" src="jsolait/jsolait.js"></script>
+  <script type="text/javascript" src="scripts/common.js"></script>
+
+  <!--[if (lte IE 6)|(gte IE 8)]>
+  <style type="text/css">
+     #outer {height:100%;display:table;}
+  </style>
+  <![endif]-->
+  
+
+</head>
+
+<body onload="InitMHConfigPage();">
+
+<div id="outer">
+    <div id="inner">
+        <div id="header"></div>
+
+        <div id="content">
+           	<div id="columnB"></div>
+
+        <!-- START PAGE CONTENT -->
+        
+	    <div id="columnA">
+		<h2>Monitoring Host</h2>
+		
+		<table width="945px" cellpadding="0" cellspacing="0"> <!-- main table | input formats -->
+		<tr  valign="top"><td>
+
+		<table cellpadding="0" cellspacing="0" class="containerDiv" width="550px">
+		   <tr>
+			 <td colspan="2" align="left">
+				<table width="100%" cellpadding="0" cellspacing="0">
+					<tr>								
+						<td class="windowHeader">Burst Messages</td>
+						<td align="right" class="windowHeader"><a class="white" title="Burst Messages and variables formats" href="#" onclick='GetHelp(helpPopup, contentBurst+contentVariable+contentTrigger+closeLink, this, "top adjacent-right", 500, 610);return false;'>Help</a>&nbsp;</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td class="labels" align="left" colspan="2">
+				<select id="lstBurstMessages" size="10" class="inputText" style="width: 528px;" onchange="EditBurstMessages();"> <option /> </select>				
+			</td>
+		</tr>
+		<tr>
+			<td class="labels" align="left" colspan="2">
+				<input type="text" id="txtBurstMessage" maxlength="100" class="inputText" style="width:489px;" 
+				title="Format: &lt;EUI64&gt;, &lt;COMMAND NUMBER&gt;, &lt;BURST MESSAGE&gt;, &lt;UPDATE PERIOD&gt;, &lt;MAXIMUM UPDATE PERIOD&gt;[, &lt;SUBDEVICE MAC&gt;]"/>&nbsp;<input 
+				type="button" id="btnHelpBurst" value=" ? " class="buttonList" onclick='GetHelp(helpPopup, contentBurst+closeLink, this, "above adjacent-right", 500, 200);return false;'/>			
+			</td>
+		</tr>
+		<tr>
+		 <td colspan="2" align="left">
+		 	<div class="listHeader" style="width:528px">Variables</div>
+		 </td>
+		</tr>
+		<tr>
+			<td class="labels" align="left" colspan="2">
+				<select id="lstVariables" size="4" class="inputText" style="width:528px;" onchange="EditVariable();"> <option /> </select>				
+			</td>
+		</tr>
+		<tr>
+			<td class="labels" align="left" colspan="2">
+				<input type="text" id="txtVariableId" maxlength="100" class="inputText" style="width:34px;" disabled
+				title="Format: &lt;COMMAND NUMBER&gt;, &lt;BURST MESSAGE&gt;,"/><input 
+				type="text" id="txtVariable" maxlength="100" class="inputText" style="width:343px;" 
+                title="Format: &lt;DEVICE VARIABLE CODE &gt;, &lt;NAME&gt;, &lt;DEVICE VARIABLE SLOT&gt; &lt;DEVICE VARIABLE CLASIFICATION&gt;, &lt;UNITS CODE&gt;" />&nbsp;<input 
+                type="button" id="btnChangeVariable" value="Change" class="buttonList" onclick="ChangeVariable();" />&nbsp;<input 
+                type="button" id="btnDelVariable" value="Del" class="buttonList" onclick="DeleteVariable();" />&nbsp;<input 
+                type="button" id="btnHelpVariable" value=" ? " class="buttonList" onclick='GetHelp(helpPopup, contentVariable+closeLink, this, "above adjacent-right", 500, 230);return false;'/>				
+			</td>
+		</tr>
+		<tr>
+          <td colspan="2" align="left">
+            <div class="listHeader" style="width:528px">Trigger</div>
+          </td>
+		</tr>
+		<tr>
+			<td class="labels" align="left" colspan="1">
+				<input type="text" id="txtTriggerId" maxlength="100" class="inputText" style="width:34px;" disabled
+                title="Format: &lt;COMMAND NUMBER&gt;, &lt;BURST MESSAGE&gt;,"/><input type="text" id="txtTrigger" maxlength="100" class="inputText" style="width:410px;" 
+                title="Format: &lt;BURST TRIGGERT MODE SELECTION&gt;, &lt;DEVICE VARIABLE CLASIFICATION&gt;, &lt;UNITS CODE&gt;, &lt;TRIGGER LEVEL&gt;" />&nbsp;<input 
+                type="button" id="btnDelTrigger" value="Del" class="buttonList" onclick="DeleteTrigger();" />&nbsp;<input 
+                type="button" id="btnHelpTrigger" value=" ? " class="buttonList" onclick='GetHelp(helpPopup, contentTrigger+closeLink, this, "above adjacent-right", 500, 230);return false;'/>								
+			</td>
+			<td align="right" colspan="1">
+				<!--input type="button" id="btnSaveTrigger" value="Save" class="button" onclick="SaveTrigger();" onblur="ClearOperationResults()" /-->
+			</td>			
+		</tr>
+        <tr>
+            <td colspan="2" align="left">
+                <table width="100%" cellpadding="0" cellspacing="0">
+                    <tr>                                
+                        <td colspan="2" align="center">
+                        <input type="button" id="btnSaveBurstMessages" value="Save" class="button" onclick="SaveBurstMessage();" onblur="ClearOperationResults()" />
+                        <input type="button" id="btnDeleteBurstMessages" value="Delete" class="button" onclick="DeleteBurstMessage();" />
+                    </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center">
+              <span id="spnOperationResultBurstMessages"></span>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" align="left">&nbsp;
+            </td>
+        </tr>
+        <tr>
+			<td colspan="2" align="left">
+			  <table width="100%" cellpadding="0" cellspacing="0">
+				<tr>								
+				  <td class="windowHeader">Manage burst messages list</td>
+				</tr>
+			  </table>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" align="left">
+                <form name="form1" action="/rpc.cgi" enctype="multipart/form-data" method="post" target="iFrame">
+				<table width="100%" cellpadding="0" cellspacing="0" border="0">
+				    <tr>
+					    <td class="labels" colspan="1">Upload&nbsp;burst&nbsp;messages&nbsp;&nbsp;<input 
+						    type="hidden" name="call1" id="call1" /><input 
+							type="file" id="mhFile" name="figure2" value="2" size="32" style="font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px; border: solid 1px #000000;" 
+	                            onkeydown="return false;" onkeypress="return false;" onkeyup="return false;"/>
+	                    </td>
+	                    <td align="right" colspan="1">
+	                  		<input type="submit" id="btnUpload" value="Upload" class="button" onclick="return Upload();" />
+			   		    </td>
+				    </tr>
+                   				   
+		      		<tr>							
+                        <td class="labels">Download&nbsp;burst&nbsp;messages</td>	
+						<td align="right">
+							<input type="submit" id="btnDownload" value="Download" class="button" onclick="Download();" />
+						</td>
+					</tr>
+					<tr>							
+                        <td class="labels">Monitor the pubishers configuration status</td>	
+						<td align="right">
+							<input type="button" id="btnPublisherMonitor" value="Monitor" class="button" onclick="SeePublishersConfigStatus();" onblur="ClearOperationResults()" />
+						</td>
+					</tr>
+
+					<tr>							
+                        <td class="labels">Load the new burst messages settings into MH</td>	
+						<td align="right">
+							<input type="button" id="btnActivate" value="Activate" class="button" onclick="Activate();" onblur="ClearOperationResults()" />
+						</td>
+					</tr>
+				</table>
+                </form>
+                <iframe src="about:blank" id="iFrame" name="iFrame" style="display:none;"></iframe>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" align="center">
+		      <span id="spnOperationResultActivate"></span>
+            </td>
+		</tr>
+		
+		</table>
+		
+		</td>
+        </tr>
+        </table>    <!-- main table, 3 sections | device format -->
+	   </div>
+		  	
+        <!-- END PAGE CONTENT -->
+
+        </div>
+    </div>
+</div>
+
+<div id="footer"></div>
+
+</body>
+</html>

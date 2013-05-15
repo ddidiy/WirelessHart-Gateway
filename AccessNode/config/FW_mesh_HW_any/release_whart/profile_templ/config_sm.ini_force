@@ -1,0 +1,37 @@
+########################## start file ##################################
+
+[ACCESS_POINT]
+    RAW_LOG=no
+
+[ WH_GATEWAY ]
+	GW_REQUEST_SERVICE = 0
+
+[NETWORK_MANAGER]        
+    # The number of initial links number on transceiver.    
+    TRANSCEIVER_ADVERTISE_LINKS_NO = 8
+    
+        JOIN_BANDWIDTH = 4
+    
+    # The max number of joins 
+    MAX_JOINS_PER_DEVICE = 3		
+    MAX_JOINS_PER_AP = 40
+    
+    KEEP_ALIVE_PERIOD = 30    
+    
+    REROUTE_ONLY_ON_FAIL = 0
+    
+    # When set to true the AP links fragmentation will be reduced to minimum; default is false.
+    ENABLE_AP_BEST_FIT_ALLOCATION = true
+        
+    # The join of a device will be delayed until all the operations having it as the owner confirms.     
+	DEVICE_JOIN_AFTER_ALL_OPERATIONS_CONFIRMS = true
+	
+	MAX_NEIGHBORS_TO_EVALUATE = 10
+	
+	PERCENT_TRAFFIC_OVERALLOC = 25
+	
+	GRAPH_ROUTING_ALGORITHM = Graph Routing With Min Path
+	
+	GENERATE_NICKNAMES_FROM_EUI64 = false
+
+###################################### end of file ##########################

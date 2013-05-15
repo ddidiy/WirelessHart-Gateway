@@ -1,0 +1,42 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+            "http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" type="text/css" href="/css/admin.css">
+	<title>Logout</title>
+	<script type="text/javascript" src="/jsolait/jsolait.js"></script>
+	<script type="text/javascript">jsolait.baseURI="/jsolait/"; </script>
+	<script type="text/javascript">
+		//<![CDATA[
+		var serviceURL = "/rpc.cgi";
+		var methods = [ "user.logout" ];
+		var jsonrpc=null;
+
+		try {
+			var jsonrpc = imprt("jsonrpc");
+		} catch(e) {
+			alert(e);
+		}
+
+		function test( userId, passId) {
+			try {
+				var service = new jsonrpc.ServiceProxy(serviceURL, methods);
+				var str_rsp = service.user.logout( ) ;
+				top.location="/admin/login.html";
+				return false ;
+			} catch(e) {
+				alert(e);
+			}
+			return true ;
+		}
+	</script>
+</head>
+<body>
+	<div id="em"><span>Login</span><br></div>
+	<form ACTION="" onSubmit="return test('user','pass')" METHOD="POST">
+		<input type="submit" value="Logout" />
+	</form>
+</body>
+</html>

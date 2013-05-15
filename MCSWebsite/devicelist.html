@@ -1,0 +1,182 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+
+  <title></title>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=8" />
+  <link href="styles/default.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="jsolait/jsolait.js"></script>
+  <script type="text/javascript" src="scripts/template.js"></script>
+  <script type="text/javascript" src="scripts/login.js"></script>
+  <script type="text/javascript" src="scripts/device.js"></script>
+  <script type="text/javascript" src="scripts/devicelist.js"></script>
+  <script type="text/javascript" src="scripts/appsettings.js"></script> 
+  <script type="text/javascript" src="scripts/common.js"></script>
+  <script type="text/javascript" src="scripts/command.js"></script>
+  <script type="text/javascript" src="scripts/date.format.js"></script>
+  <script type="text/javascript" src="sql/commandsdal.js"></script>  
+  <script type="text/javascript" src="sql/devicedal.js"></script>  
+   <!--[if (lte IE 6)|(gte IE 8)]>
+  <style type="text/css">
+     #outer {height:100%;display:table;}
+  </style>
+  <![endif]-->
+
+</head>
+
+<body onload="InitDeviceListPage();">
+
+<div id="outer">
+    <div id="inner">
+        <div id="header"></div>
+
+        <div id="content">
+           	<div id="columnB"></div>
+
+        <!-- START PAGE CONTENT -->
+        
+        	<div id="columnA">
+		    <h2>Devices</h2>
+
+		    <table>
+              <tr><td colspan="3">
+                <table cellpadding="0" cellspacing="0" width="950px">
+                  <tr>
+                    <td>
+                      <table cellpadding="0" cellspacing="0" class="containerDiv" width="950px" style="background-color: #F0F0F0;padding-left:20px;" border="0">
+                        <tr>
+                            <td class="labels" colspan="1" align="left" style="width:110px">
+                                EUI-64 Address
+                            </td>  
+                            <td colspan="1" align="left">  
+				                <input type="text" id="txtEUI64Address" name="txtEUI64Address" class="inputText" style="width: 160px;" maxlength="23"/> 
+                            </td>
+                            <td class="labels" colspan="1" align="left" style="width:100px">
+                                Device Tag
+                            </td>
+                            <td colspan="1" align="left">  
+				                <input type="text" id="txtDeviceTag" name="txtDeviceTag" class="inputText" style="width: 160px;" maxlength="32"/> 
+                            </td>
+                            <td colspan="1" align="right">
+                                <input type="button" id="btnSearch" value="Search" class="buttonFilter" onclick="Search();" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="labels" align="left" style="width:110px">
+					            Show Devices
+					        </td>
+					        <td>    
+                                <select id="ddlShowDevices" name="ddlShowDevices" class="dropdown" onchange="ShowDevicesChanged();" style="width: 165px;"> 
+                                <option value="0">Registered only</option>
+                                <option value="1">Unregistered only</option>
+                                <option value="2">All</option>
+                                </select>&nbsp;                                
+                            </td>
+                            <!--td class="labels" colspan="1" aligh="left">
+                            	Nickname
+                            </td>
+                            <td colspan="1" align="left">  
+				                <input type="text" id="txtNickname" class="inputText" style="width: 160px;" /> 
+                            </td-->
+                            <td colspan="3" align="right">                          
+                                <input type="button" id="btnReset" value="Reset" class="buttonFilter" onclick="Reset();" />
+                            </td>
+                      </tr>                          
+                     </tr-->
+
+		            </table>
+                  </td>
+                </tr>
+                <tr>
+    	          <td class="spacer" colspan="6"></td>                        
+                </tr>       
+
+		    <table width="100%" border="0" class="tableHeader">
+                <tr>	
+    			    <td align="left" class="labels" style="color:#FFFFFF">
+    			        Items per page
+    			        <select id="ddlRowsPerPage" name="ddlRowsPerPage" class="dropdown" style="width: 50px;" onchange="Search()">
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                            <option value="200">200</option>
+                        </select>
+						<span id="spnTotalNoOfRows"></span>
+                    </td>
+                    <td align="right">
+    				    <a id="anchorFirst">&lt;&lt;</a>&nbsp;
+    					<a id="anchorPrev">&lt;</a>&nbsp;
+    					<span id="spnPageNumber"></span>&nbsp;
+    					<a id="anchorNext">&gt;</a>&nbsp;
+    					<a id="anchorLast">&gt;&gt;</a>&nbsp;
+                    </td>
+                </tr>
+            </table>
+            		    
+		    <div id="tblDevices" style="text-align: center;"></div>
+		    
+		    <textarea id="devices_jst" cols="0" rows="0" style="display:none;">
+		    
+		    <table cellpadding="0" cellspacing="0" class="containerDiv" width="950px" align="left">
+		    <tr>
+			  <td colspan="9" align="left">
+				<table width="100%" cellpadding="0" cellspacing="0" border="0">
+					<tr>								
+    					<td class="tableSubHeader">&nbsp;</td>
+						<td class="tableSubHeader"><a href="javascript:ChangeOrderBy(1)" class="white">EUI-64 Address<span id="col1"></span></a></td>
+						<td class="tableSubHeader"><a href="javascript:ChangeOrderBy(2)" class="white">Nickname<span id="col2"></span></a></td>
+						<td class="tableSubHeader"><a href="javascript:ChangeOrderBy(4)" class="white">Device Tag<span id="col4"></span></a></td>
+						<td class="tableSubHeader"><a href="javascript:ChangeOrderBy(3)" class="white">Device Role/Model<span id="col3"></span></a></td>
+						<td class="tableSubHeader">Status</td>
+						<td class="tableSubHeader"><a href="javascript:ChangeOrderBy(5)" class="white">Last read<span id="col5"></span></a></td>
+						<td class="tableSubHeader"></td>
+					</tr>
+					
+                    {for d in devices}
+					
+					<tr>
+						<td class="${d.cellClass}" align="center">${d.Icon}</td>
+						<td class="${d.cellClass}" style="width: 190px;" align="left">${d.Address64}</td>
+						<td class="${d.cellClass}" style="width: 40px;" align="left">${d.Nickname}</td>
+						<td class="${d.cellClass}" style="width: 250px;" align="left">${d.DeviceTag}</td>
+						<td class="${d.cellClass}" style="width: 225px;" align="left">${d.DeviceRole}</td>
+						<td class="${d.cellClass}" style="width: 75px;" align="left">${d.DeviceStatus}</td>
+						<td class="${d.cellClass}" style="width: 140px;" align="left">${d.LastRead}</td>
+						<td class="${d.cellClass}" style="width: 25px;" align="center">${d.CommandLink}</td>
+            		</tr>
+            		
+            		{/for}
+            		
+            		<tr>	
+            		    <td class="tableHeader" colspan="8">&nbsp;</td>							
+					</tr>
+					
+				</table>
+ 			  </td>
+    		</tr>
+
+    		</table>
+		    
+		    </textarea>  
+        	      </td>
+                </tr>
+            </table>
+            </td>
+          </tr>
+		</table>
+		
+		  	</div>
+		  	
+        <!-- END PAGE CONTENT -->
+
+        </div>
+    </div>
+</div>
+
+<div id="footer"></div>
+
+</body>
+</html>

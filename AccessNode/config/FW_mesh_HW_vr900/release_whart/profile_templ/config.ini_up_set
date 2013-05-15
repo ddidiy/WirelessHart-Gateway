@@ -1,0 +1,17 @@
+########################## start file ##################################
+
+[GLOBAL]
+	 MODULES_WATCH_DOG=y
+	 WATCH_DOG_TYPE=internal
+	 WATCH_DOG_DIVISOR=5
+
+[ACCESS_POINT]
+	MAX_LOG_SIZE = 1024         # Kbytes
+	TTY_DEV= "/dev/ttyS1"
+	TTY_BAUDS = B115200
+	RAW_LOG=no
+
+
+
+
+###################################### end of file ##########################

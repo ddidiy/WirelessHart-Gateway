@@ -1,0 +1,182 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+
+  <title></title>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=8" />
+  <link href="styles/default.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="scripts/login.js"></script>
+  <script type="text/javascript" src="scripts/appsettings.js"></script>
+  <script type="text/javascript" src="scripts/validation.js"></script>
+  <script type="text/javascript" src="scripts/gateway.js"></script>
+  <script type="text/javascript" src="jsolait/jsolait.js"></script>
+  <script type="text/javascript" src="scripts/common.js"></script> 
+
+  <!--[if (lte IE 6)|(gte IE 8)]>
+  <style type="text/css">
+     #outer {height:100%;display:table;}
+  </style>
+  <![endif]-->
+
+</head>
+
+<body onload="InitGatewayPage();">
+
+<div id="outer">
+    <div id="inner">
+        <div id="header"></div>
+
+        <div id="content">
+           	<div id="columnB"></div>
+
+        <!-- START PAGE CONTENT -->
+        
+        <div id="columnA">
+		<h2>Gateway</h2>
+		<table cellpadding="0" cellspacing="0" class="containerDiv" width="400px">
+		   <tr>
+			 <td colspan="2" align="left">
+				<table width="100%" cellpadding="0" cellspacing="0">
+					<tr>								
+						<td class="windowHeader">General Settings</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+
+		<tr>
+			<td class="spacer" colspan="2"></td>
+		</tr>				
+		<tr>
+			<td class="labels" align="left">
+				Gateway Tag &nbsp;..................................
+			</td>
+			<td align="left">
+				<input type="text" id="txtGWTag" maxlength="16" class="inputText" 
+				title="Up to 16 chars"/>
+			</td>
+		</tr>
+		<tr>
+            <td class="labels" align="left">
+                Cache Read Response Timeout &nbsp;........
+            </td>
+            <td align="left">
+                <input type="text" id="txtCacheReadResponseTimeout" class="inputText"
+				       title="Integer in range [1-2.000.000.000]"/>
+            </td>
+        </tr>	
+        <tr>
+            <td class="labels" align="left">
+                Cache Burst Response Timeout &nbsp;........
+            </td>
+            <td align="left">
+                <input type="text" id="txtCacheBurstResponseTimeout" class="inputText"
+                       title="Integer in range [1-2.000.000.000]"/>
+            </td>
+        </tr>   
+
+		<tr>
+			<td class="spacer" colspan="2"></td>
+		</tr>
+		<tr>
+			<td class="labels" align="left" colspan="2" style="font-size :9px;">
+				*The Gateway must be restarted for the new settings to take effect.
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" align="left">
+				<table width="100%" cellpadding="0" cellspacing="0">
+					<tr>								
+						<td class="windowHeader">Provision/security</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td class="spacer" colspan="2"></td>
+		</tr>				
+		<tr>
+			<td class="labels" align="left" colspan="2">
+				App Join Key &nbsp;......
+				<input type="text" id="txtAppJoinKey" name="txtAppJoinKey" maxlength="32" class="inputText" style="width: 266px;" 
+                title="Format: 16 bytes represented hex: 32 chars with no space. Example: c0c1c2c3c4c5c6c7c8c9cAcBcCcDcEcF" />
+			</td>
+		</tr>
+		<tr>
+			<td class="spacer" colspan="2"></td>
+		</tr>
+		<tr>
+			<td class="labels" align="left" colspan="2" style="font-size :9px;">
+				*The Gateway must be restarted for the new settings to take effect.
+			</td>
+		</tr>
+		
+		
+		<tr>
+			<td colspan="2" align="left">
+				<table width="100%" cellpadding="0" cellspacing="0">
+					<tr>								
+						<td class="windowHeader">Logging</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td class="spacer" colspan="2"></td>
+		</tr>				
+		<tr>
+			<td class="labels" align="left">
+				App Logging level &nbsp;..........................
+			</td>
+			<td align="left">
+				<input type="radio" name="rbAppLoggingLevel" value="1" /> 1 &nbsp;&nbsp;&nbsp;
+                <input type="radio" name="rbAppLoggingLevel" value="2" /> 2 &nbsp;&nbsp;&nbsp;
+                <input type="radio" name="rbAppLoggingLevel" value="3" /> 3
+			</td>
+		</tr>	
+		<tr>
+			<td class="labels" align="left">
+				Stack Logging level &nbsp;........................
+			</td>
+			<td align="left">
+				<input type="radio" name="rbStackLoggingLevel" value="1" /> 1 &nbsp;&nbsp;&nbsp;
+                <input type="radio" name="rbStackLoggingLevel" value="2" /> 2 &nbsp;&nbsp;&nbsp;
+                <input type="radio" name="rbStackLoggingLevel" value="3" /> 3
+			</td>
+		</tr>	
+		<tr>
+			<td class="spacer" colspan="2"></td>
+		</tr>
+		<tr>
+			<td colspan="2" align="left">
+				<table width="100%" cellpadding="0" cellspacing="0">
+					<tr>								
+						<td colspan='2' align='center'>
+						<input type="button" id="btnSave" name="btnSave" value='Save' class="button" onclick="SaveData();" onblur="ClearOperationResult('spnOperationResult')" />
+						<input type="button" id="btnCancel" name="btnCancel" value='Cancel' class="button" onclick="GetData();" />
+					</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" align="center">
+		      <span id="spnOperationResult"></span>
+            </td>
+		</tr>
+
+		</table>
+    	</div>
+		  	
+        <!-- END PAGE CONTENT -->
+
+        </div>
+    </div>
+</div>
+
+<div id="footer"></div>
+
+</body>
+</html>

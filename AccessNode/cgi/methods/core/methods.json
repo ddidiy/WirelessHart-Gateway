@@ -1,0 +1,588 @@
+{
+        "file.create": {
+                "description": "Create an empty file",
+                "extra": {
+                        "users": ["ADMIN_USER"]
+                },
+                "params": {
+                        "file": {
+                                "description": "The configuration file to be created, search by default in NIVIS_PROFILE",
+                                "type": "string"
+                        }
+                },
+                "return": "boolean",
+                "type": "method"
+        },
+        "file.exists" : {
+                "description": "Check if a file exists. Suports fnmatch",
+                "extra": {
+                        "users": ["ADMIN_USER"]
+                },
+                "params": {
+                        "file": {
+                                "description": "The configuration file to be searched, search by default in NIVIS_PROFILE",
+                                "type": "string"
+                        }
+                },
+                "return": "boolean",
+                "type": "method"
+        },
+        "file.remove" : {
+                "description": "Delete a file",
+                "extra": {
+                        "users": ["ADMIN_USER"]
+                },
+                "params": {
+                        "file": {
+                                "description": "The configuration file to be removed, search by default in NIVIS_PROFILE",
+                                "type": "string"
+                        }
+                },
+                "return": "boolean",
+                "type": "method"
+        },
+        "config.getVariable": {
+                "description": "Get a config variable value",
+                "extra": {
+                        "users": ["ADMIN_USER"]
+                },
+                "params": {
+                        "configFile": {
+                                "default": "config.ini",
+                                "description": "The configuration file, search by default in NIVIS_PROFILE",
+                                "optional": true,
+                                "type": "string"
+                        },
+                        "group": {
+                                "description": "Config group in which the variable resides (no group if missing/empty)",
+                                 "optional": true,
+                                "type": "string"
+                        },
+                        "varName": {
+                                "description": "Variable name",
+                                "type": "string"
+                        },
+                        "varPos": {
+                                "default":0,
+                                "description": "Variable position - when using multiple variables with the same name",
+                                "optional": true,
+                                "type": "integer"
+                        }
+                },
+                "return": "string",
+                "type": "method"
+        },
+        "config.getGroups": {
+                "description": "Get the group list",
+                "extra": {
+                        "users": ["ADMIN_USER"]
+                },
+                "params": {
+                        "configFile": {
+                                "default": "config.ini",
+                                "description": "The configuration file, search by default in NIVIS_PROFILE",
+                                "optional": true,
+                                "type": "string"
+                        }
+                },
+                "return": [
+                        "string"
+                ],
+                "type": "method"
+        },
+        "config.getGroupVariables": {
+                "description": "Get all variables from a group",
+                "extra": {
+                        "users": ["ADMIN_USER"]
+                },
+                "params": {
+                        "configFile": {
+                                "default": "config.ini",
+                                "description": "The configuration file, search by default in NIVIS_PROFILE",
+                                "optional": true,
+                                "type": "string"
+                        },
+                        "group": {
+                                "description": "Config group",
+                                "type": "string"
+                        }
+                },
+                "return": [
+                        {
+                                "*": "*"
+                        }
+                ],
+                "type": "method"
+        },
+        "config.setGroupVariables": {
+                "description": "DO NOT USE. TODO: validate and define validate",
+                "extra": {
+                        "users": ["ADMIN_USER"]
+                },
+                "params": {
+                        "configFile": {
+                                "default": "config.ini",
+                                "description": "The configuration file, search by default in NIVIS_PROFILE",
+                                "optional": true,
+                                "type": "string"
+                        },
+                        "group": {
+                                "description": "Config group",
+                                "type": "string"
+                        },
+                        "groupPos": {
+                                "default":0,
+                                "description": "Group position if config file has multiple groups with the same name",
+                                "type": "integer"
+                        },
+                        "variables" : [ {
+                            "varName": {
+                                "description": "Variable name",
+                                "type": "string"
+                            },
+                            "varPos": {
+                                    "default":0,
+                                    "description": "Variable position - when using multiple variables with the same name",
+                                    "optional": true,
+                                    "type": "integer"
+                            },
+                            "varValue": {
+                                    "description": "Variable value",
+                                    "type": "string"
+                            }
+                        } ]
+                },
+                "return":"boolean",
+                "type": "method"
+        },
+        "config.getConfig": {
+                "description": "Get the whole config file",
+                "extra": {
+                        "users": ["ADMIN_USER"]
+                },
+                "params": {
+                        "configFile": {
+                                "default": "config.ini",
+                                "description": "The configuration file, search by default in NIVIS_PROFILE",
+                                "optional": true,
+                                "type": "string"
+                        }
+                },
+                "return": [
+                        {
+                                "group": {
+                                        "type": "string"
+                                },
+                                "variables": [
+                                        {
+                                                "*": "*"
+                                        }
+                                ]
+                        }
+                ],
+                "type": "method"
+        },
+        "config.getConfigPart": {
+                "description": "Get a part of config file",
+                "extra": {
+                        "users": ["ADMIN_USER"]
+                },
+                "params": {
+                        "configFile": {
+                                "default": "config.ini",
+                                "description": "The configuration file, search by default in NIVIS_PROFILE",
+                                "optional": true,
+                                "type": "string"
+                        },
+                        "maxVarsNo": {
+                                "description": "Maximum number of returned variables",
+                                "type": "int"
+                        }
+                },
+                "return": [
+                        {
+                                "group": {
+                                        "type": "string"
+                                },
+                                "variables": [
+                                        {
+                                                "*": "*"
+                                        }
+                                ]
+                        }
+                ],
+                "type": "method"
+        },
+        "config.setVariable": {
+                "description": "Set a config variable. If either the group or the variable doesn't exists, they will both be created",
+                "extra": {
+                        "users": ["ADMIN_USER"]
+                },
+                "params": {
+                        "configFile": {
+                                "default": "config.ini",
+                                "description": "The configuration file, default in NIVIS_PROFILE",
+                                "optional": true,
+                                "type": "string"
+                        },
+                        "group": {
+                                "description": "Config group (no group if missing/empty)",
+                                "optional": true,
+                                "type": "string"
+                        },
+                        "groupPos": {
+                                "default": 0,
+                                "description": "Group position if config file has multiple groups with the same name",
+                                "optional": true,
+                                "type": "integer"
+                        },
+                        "varName": {
+                                "description": "Variable name to be modified",
+                                "type": "string"
+                        },
+                        "varPos": {
+                                "default": 0,
+                                "description": "Variable position within group",
+                                "optional": true,
+                                "type": "integer"
+                        },
+                        "varValue": {
+                                "description": "New variable value",
+                                "type": "string"
+                        }
+                },
+                "return": "boolean",
+                "type": "method"
+        },
+        "misc.remoteCmd": {
+                "description": "Execute a shell command.",
+                "extra": {
+                        "users": ["ADMIN_USER"]
+                },
+                "params": {
+                        "cmd": {
+                                "description": "Command to execute.",
+                                "type": "string"
+                        }
+                },
+                "return": "string",
+                "type": "method"
+        },
+        "misc.getVersion": {
+                "description": "Get the firmware version",
+                "extra": {
+                        "users": ["ADMIN_USER"]
+                },
+                "params": null,
+                "return": "string",
+                "type": "method"
+        },
+        "misc.fileUpload": {
+                "description": "Uploads a file to the board then runs the specified script name",
+                "extra": {
+                        "users": ["ADMIN_USER"]
+                },
+                "params": {
+                        "file": {
+                                "description": "File to download",
+                                "type": "string"
+                        },
+                        "script": {
+                                "description": "The script to run after the file was uploaded",
+                                "type": "string",
+                                "optional": true,
+                                "default" : "If the file to upload is FILE.EXT, the default script name will be FILE.EXT_put.sh"
+                        },
+                        "scriptParams": {
+                                        "description": "The script parameters.",
+                                        "type": "string",
+                                        "optional": true,
+                                        "default":""
+                        }
+                    },
+                "return": "boolean",
+                "type": "method"
+        },
+        "misc.fileDownload": {
+                "description": "Run the specified script then downloads the specified file (allows creating the files on the fly)",
+                "extra": {
+                        "users": ["ADMIN_USER"]
+                },
+                "params": {
+                        "file": {
+                                "description": "File to download",
+                                "type": "string"
+                        },
+                        "script": {
+                                "description": "Script to run before downloading the file.",
+                                "type": "string",
+                                "optional": true,
+                                "default" : "If the file to download is FILE.EXT, the default script name will be FILE.EXT.sh"
+                        },
+                        "scriptParams": {
+                                "description": "Script parameters",
+                                "type": "string",
+                                "optional": true,
+                                "default": ""
+                        }
+                },
+                "return": "boolean",
+                "type": "method"
+        },
+        "misc.getGatewayNetworkInfo": {
+                "description": "Get the gateway variables.",
+                "extra": {
+                        "users": ["ADMIN_USER"]
+                },
+                "params": null,
+                "return": {
+                        "ip": {
+                                "format": "ipv4-address",
+                                "type": "string"
+                        },
+                        "mask": {
+                                "format": "ipv4-mask",
+                                "type": "string"
+                        },
+                        "defgw": {
+                                "format": "ipv4-address",
+                                "type": "string"
+                        },
+                        "mac0": {
+                                "type": "string",
+                                "description" : "ETH0 MAC. May be empty if the board use a IP-dependent MAC on ETH0"
+                        },
+                        "mac1": {
+                                "type": "string",
+                                "description" : "ETH1 MAC. May be empty if the board does not use ETH1"
+                        },
+                        "dhcpEnabled": {
+                                "type": "boolean",
+                                "description" : "True if DHCP client is enabled"
+                        },
+                        "nameservers": {
+                                 "type" : "array"
+                         }
+                },
+                "type": "method"
+        },
+        "misc.setGatewayNetworkInfo": {
+                "description": "Set the gateway variables.",
+                "extra": {
+                        "users": ["ADMIN_USER"]
+                },
+                "params": {
+                        "ip": {
+                                "format": "ipv4-address",
+                                "type": "string"
+                        },
+                        "mask": {
+                                "format": "ipv4-mask",
+                                "type": "string"
+                        },
+                        "defgw": {
+                                "format": "ipv4-address",
+                                "type": "string"
+                        },
+                        "updateMAC": {
+                                "type": "string",
+                                "optional": true,
+                                "default": "false",
+                                "description": "If true the ETH MAC's will be updated to value of parameters <mac> and <mac1>. Otherwise the current MAC values are not changed"
+                        },
+                        "mac0": {
+                                "type": "string",
+                                "format" : "6 bytes hex-encoded (12 chars, no separators) or empty",
+                                "optional": true,
+                                "description": "Considered ONLY if <updateMAC> is true. Empty: reset ETH0 MAC (use ip-based MAC). Not empty: set ETH0 MAC, stop using IP-based MAC"
+                        },
+                        "mac1": {
+                                "type": "string",
+                                "format" : "6 bytes hex-encoded (12 chars, no separators) or empty",
+                                "optional": true,
+                                "description": "Considered ONLY if <updateMAC> is true. Empty: reset ETH1 MAC. Not empty: set ETH1 MAC"
+                        },
+                        "dhcpEnabled": {
+                                "type": "string",
+                                "optional": true,
+                                "default": "true",
+                                "description" : "If true enable DHCP client"
+                        },
+                        "nameservers": {
+                                 "type" : "array"
+                         }
+                },
+                "return": "boolean",
+                "type": "method"
+        },
+        "misc.getNtpServers": {
+                "description": "Get the ntp servers.",
+                "extra": {
+                        "users": ["ADMIN_USER"]
+                },
+                "params": null,
+                "return": {
+                        "ntpservers": {
+                                "format": "ntp-address",
+                                "type": "array"
+                        }
+                },
+                "type": "method"
+        },
+        "misc.setNtpServers": {
+                "description": "Set the ntp servers.",
+                "extra": {
+                        "users": ["ADMIN_USER"]
+                },
+                "params": {
+                        "servers": {
+                                "format": "ntp-address",
+                                "type": "array"
+                        }
+                },
+                "return": "boolean",
+                "type": "method"
+        },
+        "misc.restartApp": {
+                "description": "Restart the application given as parameter (`killall app' ; start app)",
+                "extra": {
+                        "users": ["ADMIN_USER"]
+                },
+                "params": {
+                        "appName": {
+                                "description": "Application process name.",
+                                "type": "string"
+                        },
+                        "appParams": {
+                                "description": "Application process parameters.",
+                                "type": "string",
+                                "optional": true
+                        }
+                },
+                "return": "boolean",
+                "type": "method"
+        },
+        "misc.softwareReset": {
+                "description": "Software reset; restart all applications. The method returns before the actual soft reset terminates.",
+                "extra": {
+                        "users": ["ADMIN_USER"]
+                },
+                "params": null,
+                "return": "boolean",
+                "type": "method"
+        },
+        "misc.hardReset": {
+                "description": "Reboot the board. The method returns before the actual hard reset terminates",
+                "extra": {
+                        "users": ["ADMIN_USER"]
+                },
+                "params": null,
+                "return": "boolean",
+                "type": "method"
+        },
+        "misc.discoverRouters": {
+                "description": "Discover routers from local network",
+                "extra": {
+                        "users": ["ADMIN_USER"]
+                },
+                "params": null,
+                "return": [
+							{
+								"anID": {
+									"type": "string"
+								},
+								"staticIP": {
+									"type": "string",
+									"format": "ipv4-address"
+								},
+								"dynamicIP": {
+									"type": "string",
+									"format": "ipv4-address"
+								}
+							}
+						],
+                "type": "method"
+        },
+	"misc.applyConfigChanges": {
+		"description":"Command a module to reload configuration parameters/provisioning files",
+		"type":"method",
+		"return":"boolean",
+		"params":{
+			"module":{ "description": "Module name", "type":"string" }
+			},
+		"extra":{"users": ["ADMIN_USER"] }
+	},
+        "user.isValidSession": {
+                "description": "Return true if the user is still logged in.",
+                "extra": {
+                        "users": ["ADMIN_USER"]
+                },
+                "params": null,
+                "return": "boolean",
+                "type": "method"
+        },
+        "user.login": {
+                "description": "Login the user",
+                "extra": {
+                        "users": ["ADMIN_USER"]
+                },
+                "params": {
+                        "user": {
+                                "description": "User name",
+                                "type": "string",
+                                "maximum": 16,
+                                "minimum": 8
+                        },
+                        "pass": {
+                                "description": "Password",
+                                "type": "string"
+                        }
+                },
+                "return": "boolean",
+                "type": "method"
+        },
+        "user.logout": {
+                "description": "Logout of the current session",
+                "extra": {
+                        "users": ["ADMIN_USER"]
+                },
+                "params": null,
+                "return": "boolean",
+                "type": "method"
+        },
+        "user.reset_password": {
+                "description": "Reset the password to default for the user specified",
+                "extra": {
+                        "users": ["ADMIN_USER"]
+                },
+                "params": {
+                        "user": {
+                                "description": "The user whose password reset",
+                                "type": "string"
+                        },
+                        "serialNo": {
+                                "description": "The serial number of the gateway",
+                                "type": "string"
+                        }
+                },
+                "return": "boolean",
+                "type": "method"
+        },
+        "user.update": {
+                "description": "Change the password for the specified user",
+                "extra": {
+                        "users": ["ADMIN_USER"]
+                },
+                "params": {
+                        "pass": {
+                                "description": "The new password of the currently logged user.",
+                                "maximum": 16,
+                                "minimum": 8,
+                                "type": "string"
+                        }
+                },
+                "return": "boolean",
+                "type": "method"
+        },
+    "description":"Core RPC methods."
+}

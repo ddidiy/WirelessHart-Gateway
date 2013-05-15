@@ -1,0 +1,751 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<STYLE TYPE="text/css" MEDIA=screen>
+
+
+#outer 
+{
+    margin:auto;
+    min-height:100%;
+    margin-top:-40px;/*footer height - this drags the outer 40px up through the top of the monitor */
+}
+
+/* #inner protects any floats in the content from clearing the :before float */
+#inner 
+{
+    overflow:hidden;
+}
+
+.windowHeader
+{
+	color: #FFF;
+	background-color: #1D374F;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	font-weight: 700;
+	padding: 2px 5px 2px 10px;
+	vertical-align: middle;
+}
+
+.containerDiv
+{
+	border: 1px solid #1D374F;
+}
+
+.spacer
+{
+	font-size: 0px;
+	height: 10px;
+}
+
+.spacerBIG
+{
+	font-size: 0px;
+	height: 100px;
+}
+
+.button
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	padding: 2px 10px 2px 10px;
+	margin: 10px;
+	cursor: pointer;
+	width: 70px;
+}
+
+.buttonRestart
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	padding: 2px 10px 2px 10px;
+	margin: 3px;
+	cursor: pointer;
+	width: 70px;
+}
+
+.inputText
+{
+	border: solid 1px #1D374F;
+	background-color: #FFFFFF;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+    width: 150px;
+}
+
+.dropdown
+{
+	border: solid 1px #1D374F;
+	background-color: #FFFFFF;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+    width: 154px;
+}
+
+.labels
+{
+	color: #1D374F;		
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;	
+	padding: 2px 0px 2px 10px
+}
+
+.listAlternateItem
+{
+    background-color : #EEEEEE;
+}
+
+.opResultRed
+{
+	color: red;		
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+    font-weight : bold ;
+	padding: 2px 0px 2px 10px
+}
+
+.opResultGreen
+{
+	color: green;		
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+    font-weight : bold ;
+	padding: 2px 0px 2px 10px
+}
+
+.buttonCell
+{
+	border-top: solid 1px #1D374F;
+}
+
+
+/** BASIC */
+
+html
+{
+    height:100%;/* needed to base 100% height on something known*/
+}
+
+body 
+{
+    height:100%;/* needed to base 100% height on something known*/
+	margin: 0px;
+	padding: 0px;
+	background: url(images/img02.jpg) repeat-x left top;
+	line-height: 20px;
+	text-align: justify;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #666666;
+}
+
+/*Opera Fix*/
+body:before 
+{
+    content:"";
+    height:100%;
+    float:left;
+    width:0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-weight: normal;
+}
+
+a {
+	color: #0077dd;
+}
+
+a:hover {
+	text-decoration: none;
+}
+
+.list1 {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.list1 a {
+	background: url(images/img01.gif) no-repeat left 60%;
+	padding-left: 12px;
+}
+
+.list2 {
+	margin: 0;
+	list-style: none;
+}
+
+.list2 a {
+	background: url(images/img01.gif) no-repeat left 60%;
+	padding-left: 12px;
+}
+
+img {
+	border: none;
+}
+
+img.left {
+	float: left;
+	margin: 3px 20px 0px 0px;
+}
+
+/** HEADER */
+
+#header {
+	width: 778px;
+	margin: 0px auto;
+	padding: 1em;
+	height: 90px;
+	color: #254360;
+	font-size: 16px;
+	border-top:40px solid #fff; /* soak up negative margin and allows header to start at top of page*/
+}
+
+#header h1 {
+	margin: 0px;
+	padding: 20px 0px 0px 0px;
+	text-transform: uppercase;
+	font-weight: bold;
+}
+
+#header h2 {
+	margin: 0 0 0 -80px;
+	padding: 0px 0px 0px 95px;
+	text-transform: uppercase;
+	font-weight: bold;
+	font-size: 13px;
+}
+
+/** CONTENT */
+
+#content {
+	width: 778px;
+	margin: 0px auto;
+	padding: 0px 0px 20px 0px;
+}
+
+.contentLogin {
+	width: 778px;
+	margin: 0px auto;
+	padding: 150px 0px 20px 0px;
+}
+
+#columnA {
+	float: right;
+	width: 538px;
+	padding-left: 20px;
+	border-left: 1px dashed #EEEEEE;
+}
+
+#columnA h2 {
+	height: 22px;
+	border-bottom: 1px dashed #EEEEEE;
+	font-size: 12pt;
+	font-weight: bold;
+}
+
+#columnB {
+	float: left;
+	width: 200px;
+}
+
+#columnB h3 {
+	height: 22px;
+	border-bottom: 1px dashed #EEEEEE;
+	border-spacing: 2px;
+	font-size: 11pt;
+	font-weight: bold;
+}
+
+/** FOOTER */
+
+#footer 
+{
+    margin:auto;
+	width:100%;
+    height:40px;/* must match negative margin of #outer */
+	background: url(images/img03.gif) repeat-x left top;
+	text-align: center;
+    clear:both;
+}
+
+#footer p 
+{
+	margin: 0px;
+	padding: 10px 0px 0px 0px;
+	font-size: 10px;
+	color: #FFFFFF;
+}
+</style>
+
+<head>
+
+  <title>VR900 Configuration Tool</title>
+  <meta http-equiv="content-type" content=
+  "text/html; charset=us-ascii" />
+  <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+  <link href="styles/default.css" rel="stylesheet" type="text/css" />
+
+  <script type="text/javascript" src="../jsolait/jsolait.js"> </script>
+
+  <script type="text/javascript" >
+		jsolait.baseURI = "/jsolait/";
+                var serviceURL = "/rpc.cgi";
+		var methods = ["config.setVariable",
+		               "config.getConfig",
+				"config.setVariable"];
+                var jsonrpc=null;
+		
+
+//contains all the config file content, populated once on load, and after new variable addition or variable edit
+var CONFIG;
+
+
+//used for reloading CONFIG after a new variable is added
+var customVariableAdded = false;
+
+
+
+//controls wether exception details are shown
+var DEBUG = false;
+
+
+function HandleException(ex, msg)
+{
+    //session expired case
+    if (ex.message != null && ex.message == "Login first.")
+    {
+        top.location.href = "login.html?exp";
+        return;
+    }
+    
+    if(!DEBUG)
+    {
+        alert(msg);
+    }
+    else
+    {
+        alert(msg + "\n" + ex);
+    }
+}
+
+function InitJSON()
+{
+    try 
+	{
+        jsonrpc = imprt("jsonrpc");
+    } 
+	catch (e) 
+	{
+        alert(e);
+    }
+}
+
+
+function ReadConfig()
+{
+    try
+    {
+        var service = new jsonrpc.ServiceProxy(serviceURL, methods);
+ 
+        CONFIG = service.config.getConfig({});
+    }
+    catch(e)
+    {
+        HandleException(e, "Unexpected error reading config !");
+    }
+}
+
+
+function PopulateSections()
+{
+    var ddlSection = document.getElementById("ddlSection");
+    
+    for(i = 0;i < CONFIG.length; i++)
+    {
+        ddlSection.options[i] = new Option(CONFIG[i].group,CONFIG[i].group);
+    }
+}
+
+
+function ClearVariables()   //TODO ??
+{
+   var txtValue = document.getElementById("txtValue");
+   var lst = document.getElementById("ddlVariable");
+   
+   for (i = lst.length; i >= 0; i--) 
+   {
+      lst[i] = null;
+   }
+   
+   txtValue.value = "";
+}
+
+
+function PopulateVariableValue()    //TODO optimize ??
+{
+    var txtSection = document.getElementById("txtSection");
+    if (txtSection.style.display == "none") //standard mode
+    {
+        var ddlSection = document.getElementById("ddlSection");
+        var ddlVariable = document.getElementById("ddlVariable");    
+        var txtValue = document.getElementById("txtValue");
+    
+        //find current group
+        var sectionPos = 0;
+    
+        for(i = 0;i < CONFIG.length; i++)
+        {
+            if(CONFIG[i].group == ddlSection.value)
+            {
+                sectionPos = i;
+                break;
+            }
+        }
+
+        for (i = 0; i < CONFIG[sectionPos].variables.length; i++)
+        {
+            for (var variable in CONFIG[sectionPos].variables[i])
+            {
+                if (ddlVariable.value == variable)
+                {
+                    txtValue.value = CONFIG[sectionPos].variables[i][variable];
+                }
+            }
+        }
+    }
+}
+
+
+
+
+function PopulateVariables()
+{
+    ClearVariables();
+    
+    var ddlSection = document.getElementById("ddlSection");
+    var ddlVariable = document.getElementById("ddlVariable");
+    
+    //find current group
+    var sectionPos = 0;
+    
+    for(i = 0;i < CONFIG.length; i++)
+    {
+        if(CONFIG[i].group == ddlSection.value)
+        {
+            sectionPos = i;
+            break;
+        }
+    }
+
+    for (i = 0; i < CONFIG[sectionPos].variables.length; i++)
+    {
+        for (var variable in CONFIG[sectionPos].variables[i])
+        {
+            ddlVariable.options[i] = new Option(variable, variable);
+        }
+    } 
+    
+    PopulateVariableValue();
+}
+
+
+
+//for multiple result spans per page
+
+function DisplayOperationResultForControl(controlName, msg)
+{
+    var control = document.getElementById(controlName);
+    control.className = "opResultGreen";
+    control.innerHTML = msg;
+}
+
+//=================================================
+function ClearOperationResultForControl(controlName)
+{
+    DisplayOperationResultForControl(controlName, "");
+}
+
+
+
+
+//=======================================================================
+
+function ClearOperationResults()
+{
+    ClearOperationResultForControl("spnSetResult");
+    ClearOperationResultForControl("spnOperationResult");
+}
+
+function VariableTypeChanged(type)
+{
+    ClearOperationResults();
+    
+    var ddlSection = document.getElementById("ddlSection");
+    var ddlVariable = document.getElementById("ddlVariable");
+    var txtSection = document.getElementById("txtSection");
+    var txtVariable = document.getElementById("txtVariable");
+    
+    var txtValue = document.getElementById("txtValue");
+    
+    txtSection.value = txtVariable.value = txtValue.value = "";
+    
+    if (type == '1')
+    {
+        ddlSection.style.display = "inline";
+        ddlVariable.style.display = "inline";
+        txtSection.style.display = "none";
+        txtVariable.style.display = "none";
+       
+        txtValue.focus();
+        
+        if (customVariableAdded)    //reload CONFIG after adding custom variable(s)
+        {
+            customVariableAdded = false;
+            ReadConfig();
+            PopulateSections();
+            PopulateVariables();
+        }
+        PopulateVariableValue();
+    }
+    else
+    {
+        ddlSection.style.display = "none";
+        ddlVariable.style.display = "none";
+        txtSection.style.display = "inline";
+        txtVariable.style.display = "inline";
+        
+        txtSection.focus();
+    }
+}
+
+function ValidateRequired(control, fieldName)
+{
+    if (control.value == null || control.value == "") 
+    {
+        alert("Field '" + fieldName + "' is required !");
+        control.focus();        
+        return false;
+    }
+    return true;
+}
+
+//SECTIONS/VARIABLES
+
+function SetVariable()
+{
+    ClearOperationResults();
+    
+    //
+    {
+        var txtSection = document.getElementById("txtSection");
+        var txtVariable = document.getElementById("txtVariable");
+        
+        var isCustomVariable = (txtSection.style.display == "inline") && (txtVariable.style.display == "inline");
+        
+        var section = document.getElementById("ddlSection");
+	    var variable = document.getElementById("ddlVariable");	
+	    
+	    //custom variable validation
+	    if (isCustomVariable)
+	    {
+	        if(!ValidateRequired(txtSection, "Section"))
+            {
+                return;
+            }
+            if(!ValidateRequired(txtVariable, "Variable"))
+            {
+                return;
+            }       
+        }
+	    
+    	var val = document.getElementById("txtValue");
+	
+        if(!ValidateRequired(val, "Value"))
+        {
+            return;
+        }
+        
+        var saveFailed = false;
+    
+        try
+        {
+            var service = new jsonrpc.ServiceProxy(serviceURL, methods);
+        
+            if (isCustomVariable)
+            {
+                if(!service.config.setVariable({group : txtSection.value, varName : txtVariable.value, varValue: val.value}))
+                {
+                    alert ("Error saving variable !");
+                    saveFailed = true;
+                }
+                else //save is ok
+                {
+                    customVariableAdded = true;
+                }
+            }
+            else
+            {
+                if (!service.config.setVariable({group : section.value, varName : variable.value, varValue: val.value}))
+                {
+                    alert ("Error saving variable !");
+                    saveFailed = true;
+                }
+            }
+        }
+        catch(e)
+        {
+           HandleException(e, "Unexpected error saving value !");
+           return;
+        }
+
+        ReadConfig();
+        ResetSectionsVariables();
+        
+        if (!saveFailed)
+        {
+            DisplayOperationResultForControl("spnSetResult", "Set variable completed successfully.");            
+        }    
+        
+        //PopulateVariableValue();
+    }
+}
+
+
+
+function ResetSectionsVariables()
+{
+    ClearOperationResults();
+    //ma=ybe later, selectedindex = 0 ...
+	//var section = document.getElementById("lstSection");
+	//document.getElementById("txtVariable").value = "";	
+	
+	var txtVal = document.getElementById("txtValue");
+	txtVal.value = "";   
+	
+	var txtSection = document.getElementById("txtSection");
+	
+	if (txtSection.style.display == "inline")  //custom mode
+	{
+        document.getElementById("txtVariable").value = "";
+        
+        txtSection.value = "";
+      	txtSection.focus();        
+    }
+    else    //standard mode
+    {
+        PopulateVariableValue();
+      	txtVal.focus();
+    }
+	
+
+}
+
+
+function InitPage()
+{
+//    	SetFooterText();
+    	InitJSON();
+    
+    	ReadConfig();
+    	if(CONFIG != null)
+    	{
+        	PopulateSections();
+        	PopulateVariables();
+    	}
+}
+
+</script>
+
+</head>
+
+
+<body onload="InitPage();">
+
+      <div id="content">
+        <div id="columnA">
+          <h2>Edit configuration</h2>
+
+          <table cellpadding="0" cellspacing="0" class="containerDiv" width="460px">
+            <tr>
+              <td colspan="2" align="left">
+                <table width="100%" cellpadding="0" cellspacing="0">
+                  <tr>
+                    <td class="windowHeader">
+                    Sections/variables</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="spacer" colspan="2"></td>
+            </tr>
+
+            <tr>
+              <td class="labels" align="left" colspan="2">Variable type &nbsp;...................................&nbsp;
+              <input type="radio" name="rbVariableType" value="1" checked="checked" onclick="VariableTypeChanged('1');" />Standard 
+		<input type="radio" name="rbVariableType" value="2" onclick="VariableTypeChanged('2');" />Custom</td>
+            </tr>
+
+            <tr>
+              <td class="labels" align="left" colspan="2">Section &nbsp;............................................&nbsp;
+              <select id="ddlSection" name="ddlSection" class="dropdown" onchange="PopulateVariables();" style="width: 205px;"></select>
+		 <input type="text" id="txtSection" name="txtSection" maxlength="50" class="inputText" style="display: none; width: 201px;" /></td>
+            </tr>
+
+            <tr>
+              <td class="labels" align="left" colspan="2">Variable &nbsp;.............&nbsp; 
+			<select id="ddlVariable" name="ddlVariable" class="dropdown" onchange="PopulateVariableValue();" style="width: 324px;"> </select> 
+			<input type="text" id="txtVariable" name="txtVariable" maxlength="50" class="inputText" style="width: 320px; display: none;" />
+		</td>
+            </tr>
+
+            <tr>
+              <td class="labels" align="left" colspan="2">Value &nbsp;.................&nbsp; 
+		<input type="text" id="txtValue" name="txtValue" maxlength="50" class="inputText" style="width: 319px;" /></td>
+            </tr>
+
+            <tr>
+              <td class="spacer" colspan="2"></td>
+            </tr>
+
+            <tr>
+              <td colspan="2" align="left">
+                <table width="100%" cellpadding="0" cellspacing=
+                "0">
+                  <tr>
+                    <td colspan='2' align='center'><input type="button" id="btnSetVariable" name="btnSetVariable" value='Set' class="button" onclick="SetVariable();" /> 
+			<input type="button" id="btnCancel" name="btnCancel" value='Cancel' class="button" onclick="ResetSectionsVariables();" />
+		   </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+            <tr>
+              <td colspan="2" align="center"><span id="spnSetResult"></span></td>
+            </tr>
+
+            <tr>
+              <td class="spacer" colspan="2"></td>
+            </tr>
+
+            <tr>
+              <td colspan="2" align="center"><span id="spnOperationResult"></span></td>
+            </tr>
+
+            <tr>
+              <td class="spacer" colspan="2"></td>
+            </tr>
+
+
+          </table>
+        </div>
+
+  <div id="footer"></div>
+</body>
+</html>

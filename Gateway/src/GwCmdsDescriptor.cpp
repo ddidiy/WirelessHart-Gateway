@@ -1,0 +1,236 @@
+/*
+* Copyright (C) 2013 Nivis LLC.
+* Email:   opensource@nivis.com
+* Website: http://www.nivis.com
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, version 3 of the License.
+* 
+* Redistribution and use in source and binary forms must retain this
+* copyright notice.
+
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*
+*/
+
+
+#include <algorithm>
+
+#include <WHartGateway/GwCmdsDescriptor.h>
+#include <WHartGateway/GwUtil.h>
+
+using namespace std;
+
+namespace hart7 {
+namespace gateway {
+
+	const GwDescriptorEntry g_pCommandDescriptorEntries[] = {
+		CREATE_CMD_DESCRIPTOR_ENTRY(C000_ReadUniqueIdentifier),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C001_ReadPrimaryVariable),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C002_ReadLoopCurrentAndPercentOfRange),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C003_ReadDynamicVariablesAndLoopCurrent),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C006_WritePollingAddress),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C007_ReadLoopConfiguration),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C008_ReadDynamicVariableClassifications),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C009_ReadDeviceVariablesWithStatus),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C011_ReadUniqueIdentifierAssociatedWithTag),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C012_ReadMessage),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C013_ReadTagDescriptorDate),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C014_ReadPrimaryVariableTransducerInformation),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C015_ReadDeviceInformation),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C016_ReadFinalAssemblyNumber),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C017_WriteMessage),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C018_WriteTagDescriptorDate),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C019_WriteFinalAssemblyNumber),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C020_ReadLongTag),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C021_ReadUniqueIdentifierAssociatedWithLongTag),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C022_WriteLongTag),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C033_ReadDeviceVariables),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C034_WritePrimaryVariableDampingValue),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C035_WritePrimaryVariableRangeValues),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C036_SetPrimaryVariableUpperRangeValue),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C037_SetPrimaryVariableLowerRangeValue),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C038_ResetConfigurationChangedFlag),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C040_EnterExitFixedCurrentMode),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C041_PerformSelfTest),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C042_PerformDeviceReset),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C043_SetPrimaryVariableZero),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C044_WritePrimaryVariableUnits),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C045_TrimLoopCurrentZero),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C046_TrimLoopCurrentGain),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C047_WritePrimaryVariableTransferFunction),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C048_ReadAdditionalDeviceStatus),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C049_WritePrimaryVariableTransducerSerialNumber),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C050_ReadDynamicVariableAssignments),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C051_WriteDynamicVariableAssignments),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C052_SetDeviceVariableZero),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C053_WriteDeviceVariableUnits),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C054_ReadDeviceVariableInformation),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C055_WriteDeviceVariableDampingValue),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C056_WriteDeviceVariableTransducerSerialNo),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C059_WriteNumberOfResponsePreambles),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C060_ReadAnalogChannelAndPercentOfRange),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C062_ReadAnalogChannels),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C063_ReadAnalogChannelInformation),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C064_WriteAnalogChannelAdditionalDampingValue),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C065_WriteAnalogChannelRangeValues),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C066_EnterExitFixedAnalogChannelMode),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C067_TrimAnalogChannelZero),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C068_TrimAnalogChannelGain),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C069_WriteAnalogChannelTransferFunction),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C070_ReadAnalogChannelEndpointValues),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C071_LockDevice),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C072_Squawk),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C073_FindDevice),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C074_ReadIOSystemCapabilities),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C075_PollSubDevice),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C076_ReadLockDeviceState),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C077_SendCommandToSubDevice),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C078_ReadAggregatedCommands),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C079_WriteDeviceVariable),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C080_ReadDeviceVariableTrimPoints),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C081_ReadDeviceVariableTrimGuidelines),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C082_WriteDeviceVariableTrimPoint),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C083_ResetDeviceVariableTrim),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C084_ReadSubDeviceIdentitySummary),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C085_ReadIOChannelStatistics),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C086_ReadSubDeviceStatistics),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C087_WriteIOSystemMasterMode),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C088_WriteIOSystemRetryCount),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C089_SetRealTimeClock),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C090_ReadRealTimeClock),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C091_ReadTrendConfiguration),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C092_WriteTrendConfiguration),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C093_ReadTrend),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C094_ReadIOSystemClientSideCommunicationStatistics),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C095_ReadDeviceCommunicationsStatistics),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C096_ReadSynchronousAction),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C097_ConfigureSynchronousAction),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C098_ReadCommandAction),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C099_ConfigureCommandAction),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C101_ReadSubDeviceToBurstMessageMap),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C102_MapSubDeviceToBurstMessage),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C103_WriteBurstPeriod),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C104_WriteBurstTrigger),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C105_ReadBurstModeConfiguration),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C106_FlushDelayedResponses),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C107_WriteBurstDeviceVariables),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C108_WriteBurstModeCommandNumber),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C109_BurstModeControl),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C113_CatchDeviceVariable),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C114_ReadCaughtDeviceVariable),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C115_ReadEventNotificationSummary),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C116_WriteEventNotificationBitMask),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C117_WriteEventNotificationTiming),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C118_EventNotificationControl),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C119_AcknowledgeEventNotification),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C178_PublishedDynamicData),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C512_ReadCountryCode),
+		//	CREATE_CMD_DESCRIPTOR_ENTRY(C513_ReadCountryCode),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C768_WriteJoinKey),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C769_ReadJoinStatus),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C770_RequestActiveAdvertise),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C771_ForceJoin),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C772_ReadJoinModeConfiguration),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C773_WriteNetworkId),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C774_ReadNetworkId),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C777_ReadWirelessDeviceInformation),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C778_ReadBatteryLife),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C779_ReportDeviceHealth),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C780_ReportNeighborHealthList),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C781_ReadDeviceNicknameAddress),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C782_ReadSessionEntries),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C783_ReadSuperframeList),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C784_ReadLinkList),
+		//CREATE_CMD_DESCRIPTOR_ENTRY(C785_ReadGraphList),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C786_ReadNeighborPropertyFlag),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C787_ReportNeighborSignalLevels),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C788_AlarmPathDown),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C789_AlarmSourceRouteFailed),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C790_AlarmGraphRouteFailed),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C791_AlarmTransportLayerFailed),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C793_WriteUTCTime),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C794_ReadUTCTime),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C795_WriteTimerInterval),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C796_ReadTimerInterval),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C797_WriteRadioPower),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C798_ReadRadioPower),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C799_RequestService),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C800_ReadServiceList),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C801_DeleteService),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C802_ReadRouteList),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C803_ReadSourceRoute),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C804_ReadRadioCCAMode),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C805_WriteRadioCCAMode),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C806_ReadHandheldSuperframe),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C807_RequestHandheldSuperframeMode),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C808_ReadTimeToLive),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C809_WriteTimeToLive),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C810_ReadJoinPriority),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C811_WriteJoinPriority),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C812_ReadPacketReceivePriority),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C813_WritePacketReceivePriority),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C814_ReadDeviceListEntries),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C815_AddDeviceListTableEntry),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C816_DeleteDeviceListTableEntry),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C817_ReadChannelBlacklist),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C818_WriteChannelBlacklist),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C819_ReadBackOffExponent),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C820_WriteBackOffExponent),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C821_WriteNetworkAccessMode),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C822_ReadNetworkAccessMode),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C823_RequestSession),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C832_ReadNetworkDeviceIdentity),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C833_ReadNetworkDeviceNeighbourHealth),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C834_ReadNetworkTopologyInformation),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C835_ReadBurstMessageList),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C836_FlushCacheResponses),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C837_WriteUpdateNotificationBitMask),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C838_ReadUpdateNotificationBitMask),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C839_ChangeNotification),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C840_ReadDeviceStatistics),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C841_ReadNetworkDeviceIdentityByNickname),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C842_WriteDeviceSchedulingFlags),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C843_ReadDeviceSchedulingFlags),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C844_ReadNetworkConstraints),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C845_WriteNetworkConstraints),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C960_DisconnectDevice),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C961_WriteNetworkKey),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C962_WriteDeviceNicknameAddress),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C963_WriteSession),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C964_DeleteSession),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C965_WriteSuperframe),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C966_DeleteSuperframe),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C967_WriteLink),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C968_DeleteLink),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C969_WriteGraphNeighbourPair),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C970_DeleteGraphConnection),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C971_WriteNeighbourPropertyFlag),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C972_SuspendDevices),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C973_WriteService),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C974_WriteRoute),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C975_DeleteRoute),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C976_WriteSourceRoute),
+		CREATE_CMD_DESCRIPTOR_ENTRY(C977_DeleteSourceRoute)
+	};
+
+int const g_nCommandDescriptorEntriesSize = sizeof(g_pCommandDescriptorEntries)/sizeof(GwDescriptorEntry);
+
+const GwDescriptorEntry & GetCmdDescriptor( uint16_t p_nCmdId )
+{
+	return *lower_bound( g_pCommandDescriptorEntries,
+	                     g_pCommandDescriptorEntries + g_nCommandDescriptorEntriesSize,
+	                     p_nCmdId,
+	                     CBinSearchCmdPredicate() );
+}
+
+
+} // namespace gateway
+} // namespace hart7

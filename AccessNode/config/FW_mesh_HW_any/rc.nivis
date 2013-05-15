@@ -1,0 +1,32 @@
+#!/bin/sh
+
+# get time from RTC
+i2c-rtc --sync -r 0
+
+cd /access_node/firmware
+
+if [ -f common.sh ]; then
+	. common.sh
+	VerifyConsistentHwVer || exit 1
+fi
+
+# log this after get time
+log2flash "AN pwr_on : uptime=`cat /proc/uptime | cut -f1 -d ' '`s"
+
+[ -f /access_node/etc/cp_without_ids ] && set_usb_ttys.sh
+
+
+if [ -f start.sh ]; then
+	/access_node/bin/jffs2_gcd_check.sh
+	start.sh no_stop
+	echo "Starting discovery module"
+	/access_node/firmware/discovery&
+	sleep 4
+	#must call this AFTER start.sh
+	[ -x /access_node/firmware/raise_an_ev ] && raise_an_ev -e 11 || echo "/access_node/firmware/raise_an_ev is not executable"
+else
+	echo "PANIC Nivis apps NOT found, nothing to run..."
+	echo "Starting a shell just for debugging."
+	echo "Do not forget to reboot afterwards."
+	/bin/sh;
+fi

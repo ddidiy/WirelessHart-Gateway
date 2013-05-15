@@ -1,0 +1,189 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+
+  <title></title>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=8" />
+  <link href="styles/default.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="scripts/login.js"></script>
+  <script type="text/javascript" src="scripts/validation.js"></script>  
+  <script type="text/javascript" src="scripts/accesspoint.js"></script>
+  <script type="text/javascript" src="jsolait/jsolait.js"></script>
+  <script type="text/javascript" src="scripts/common.js"></script> 
+
+  <!--[if (lte IE 6)|(gte IE 8)]>
+  <style type="text/css">
+     #outer {height:100%;display:table;}
+  </style>
+  <![endif]-->
+
+</head>
+
+<body onload="InitAccessPointPage();">
+
+<div id="outer">
+    <div id="inner">
+        <div id="header"></div>
+
+        <div id="content">
+           	<div id="columnB"></div>
+
+        <!-- START PAGE CONTENT -->
+        
+        <div id="columnA">
+		<h2>Access Point</h2>
+		<table cellpadding="0" cellspacing="0" class="containerDiv" width="400px">
+		   <tr>
+			 <td colspan="2" align="left">
+				<table width="100%" cellpadding="0" cellspacing="0">
+					<tr>								
+						<td class="windowHeader">General Settings</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td class="spacer" colspan="2"></td>
+		</tr>				
+		<tr>
+			<td class="labels" align="left">
+				EUI64 &nbsp;............................................
+			</td>
+			<td align="left">
+				<input type="text" id="txtEUI64" maxlength=23" class="inputText" title="Format: 8 bytes grouped by 2, represented as hex, separated by minus. Example: 00-00-00-00-00-00-00-F5" />&nbsp;
+			</td>
+		</tr>
+		<tr>
+			<td class="labels" align="left">
+				AP Tag &nbsp;..........................................
+			</td>
+			<td align="left">
+				<input type="text" id="txtBBRTag" maxlength="16" class="inputText" 
+				title="Up to 16 chars"/>
+			</td>
+		</tr>
+		<tr>
+			<td class="labels" align="left">
+				Network ID&nbsp;.....................................
+			</td>
+			<td align="left">
+				<input type="text" id="txtNetworkID" class="inputText" maxlength="4"/>
+			</td>
+		</tr>	
+    	<tr>
+			<td class="spacer" colspan="2"></td>
+		</tr>
+		<tr>
+			<td class="labels" align="left" colspan="2" style="font-size :9px;">
+				*The Access Point must be restarted for the new settings to take effect.
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" align="left">
+				<table width="100%" cellpadding="0" cellspacing="0">
+					<tr>								
+						<td class="windowHeader">Provision/security</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td class="spacer" colspan="2"></td>
+		</tr>				
+		<tr>
+			<td class="labels" align="left" colspan="2">
+				App Join Key &nbsp;......&nbsp;
+				<input type="text" title="Format: 16 bytes represented as hex, 32 chars, no spaces. Example: c0c1c2c3c4c5c6c7c8c9cAcBcCcDcEcF"
+                 id="txtAppJoinKey" maxlength="32" class="inputText" style="width: 265px;" />
+			</td>
+		</tr>
+    	<tr>
+			<td class="spacer" colspan="2"></td>
+		</tr>
+		<tr>
+			<td class="labels" align="left" colspan="2" style="font-size :9px;">
+				*The Access Point must be restarted for the new settings to take effect.
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" align="left">
+				<table width="100%" cellpadding="0" cellspacing="0">
+					<tr>								
+						<td class="windowHeader">Serial communication</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td class="spacer" colspan="2"></td>
+		</tr>				
+		<tr>
+			<td class="labels" align="left">
+				Serial Name &nbsp;...................................
+			</td>
+			<td align="left">
+				<input type="text" id="txtSerialName" maxlength="50" class="inputText" />
+			</td>
+		</tr>
+
+		<tr>
+			<td class="spacer" colspan="2"></td>
+		</tr>
+		<tr>
+			<td colspan="2" align="left">
+				<table width="100%" cellpadding="0" cellspacing="0">
+					<tr>								
+						<td class="windowHeader">Logging</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td class="spacer" colspan="2"></td>
+		</tr>				
+		<tr>
+			<td class="labels" align="left">
+				Stack Logging level &nbsp;.........................
+			</td>
+			<td align="left">
+				<input type="radio" name="rbStackLoggingLevel" value="1" /> 1 &nbsp;&nbsp;&nbsp;
+                <input type="radio" name="rbStackLoggingLevel" value="2" /> 2 &nbsp;&nbsp;&nbsp;
+                <input type="radio" name="rbStackLoggingLevel" value="3" /> 3
+			</td>
+		</tr>	
+		<tr>
+			<td class="spacer" colspan="2"></td>
+		</tr>
+		
+		<tr>
+			<td colspan="2" align="left">
+				<table width="100%" cellpadding="0" cellspacing="0">
+					<tr>								
+						<td colspan='2' align='center'>
+						<input type="button" id="btnSave" value='Save' class="button" onclick="SaveData();" onblur="ClearOperationResult('spnOperationResult')"/>
+						<input type="button" id="btnCancel" value='Cancel' class="button" onclick="GetData();" />
+					</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+	   	   <td colspan="2" align="center">
+		      <span id="spnOperationResult"></span>
+            </td>
+		</tr>
+		</table>
+    	</div>
+		  	
+        <!-- END PAGE CONTENT -->
+
+        </div>
+    </div>
+</div>
+
+<div id="footer"></div>
+
+</body>
+</html>

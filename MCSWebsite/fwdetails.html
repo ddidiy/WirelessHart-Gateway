@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+
+  <title></title>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=8" />
+  <link href="styles/default.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="scripts/login.js"></script>
+  <script type="text/javascript" src="scripts/fwdetails.js"></script>
+  <script type="text/javascript" src="scripts/date.format.js"></script>
+    <script type="text/javascript" src="scripts/validation.js"></script>
+  <script type="text/javascript" src="jsolait/jsolait.js"></script>
+  <script type="text/javascript" src="scripts/firmware.js"></script>
+  <script type="text/javascript" src="sql/firmwaredal.js"></script>
+  <script type="text/javascript" src="scripts/common.js"></script>
+
+  <!--[if (lte IE 6)|(gte IE 8)]>
+  <style type="text/css">
+     #outer {height:100%;display:table;}
+  </style>
+  <![endif]-->
+
+</head>
+
+<body onload="InitFirmwareDetailsPage();">
+
+<div id="outer">
+    <div id="inner">
+        <div id="header"></div>
+
+        <div id="content">
+           	<div id="columnB"></div>
+
+        <!-- START PAGE CONTENT -->
+        
+        	<div id="columnA">
+		    <h2>Firmware details</h2>
+		    
+		    <form name="form1" action="/rpc.cgi" enctype="multipart/form-data" method="post" target="iFrame">
+		    <table cellpadding="0" cellspacing="0" class="containerDiv" width="500px" border="0">
+		   <tr>
+			 <td colspan="2" align="left">
+				<table width="100%" cellpadding="0" cellspacing="0">
+					<tr>								
+						<td class="windowHeader"><span id="spnAddOrEdit"></span> Firmware</td>
+					</tr>
+				</table>
+			</td>
+		  </tr>
+		  	<tr>
+	       		<td class="spacer"></td>
+    	   	</tr>
+    	   	
+    	   	 <tr>
+			    <td class="labels" colspan="2">
+			       <span id="spnDetails" style="display: none;">
+    			   	   File Name: <span id="spnFileName"></span><br />
+  	     		   	   Version: <span id="spnVersion"></span><br />
+                       Firmware Type: <span id="spnFirmwareType"></span> <br />
+                   </span>
+			   </td>
+		   </tr>
+   	   	
+          <tr>
+				     <td class="labels"  colspan="2">
+				     <span id="spnUploadControl" style="display: none;">
+                        Firmware file .............&nbsp;
+                		<input type='hidden' name='call1' id='call1'/>
+                        <input type='file' id="figure2" name='figure2' value='2' size="40" style="font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px; border: solid 1px #000000;" 
+                            onkeydown="return false;" onkeypress="return false;" onkeyup="return false;" />
+                    </span>
+                    </td>
+		    </tr>
+
+       	<tr>
+			<td class="labels" align="left" colspan="2">
+	          <span id="spnTypeEdit" style="display: none;">
+	      			Firmware type &nbsp;..........&nbsp;
+    				<select id="ddlFirmwareTypes" class="dropdown" style="width: 200px;"> <option /> </select>
+          		</span>			
+			</td>
+		</tr>
+		<tr>
+			<td class="labels" align="left" colspan="2">
+               <span id="spnVersionEdit" style="display: none;">
+	       			Version &nbsp;....................&nbsp;
+                    <input type="text" id="txtVersion" maxlength="50" class="inputText" style="width: 200px;"/>
+               </span>
+			</td>
+		</tr>	
+
+
+        <tr>
+			<td class="labels" align="left">
+				Description ................&nbsp;
+				<textarea id="txtDescription" maxlength="250" class="inputText" rows="3" style="width: 320px;"></textarea>
+			</td>
+		</tr>
+
+        	<tr>
+	       		<td class="spacer" colspan="2"></td>
+    	   	</tr>
+    		<tr>								
+					<td colspan='2' align='center'>
+						<input type="submit" id="btnSave" value='Save' class="button" onclick="Save();" />
+						<input type="button" id="btnCancel" value='Cancel' class="button" onclick="Cancel();" />
+					</td>
+					</tr>	   	
+        	<tr>
+	       		<td class="spacer" colspan="2"></td>
+    	   	</tr>    	   	
+		</table>
+		</form>
+        <iframe src="about:blank" id="iFrame" name="iFrame" style="display:none;"></iframe>
+            
+		  	</div>
+		  	
+        <!-- END PAGE CONTENT -->
+
+        </div>
+    </div>
+</div>
+
+<div id="footer"></div>
+
+</body>
+</html>

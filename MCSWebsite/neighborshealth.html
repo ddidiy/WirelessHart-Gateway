@@ -1,0 +1,210 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+
+  <title></title>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=8" />
+  <link href="styles/default.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="scripts/template.js"></script>
+  <link rel="stylesheet" href="calendar/calendar.css" type="text/css" />
+  <script type="text/javascript" src="calendar/calendar_us.js"></script>    
+  <script type="text/javascript" src="scripts/login.js"></script>
+  <script type="text/javascript" src="scripts/devicetabs.js"></script>
+  <script type="text/javascript" src="scripts/date.format.js"></script>
+  <script type="text/javascript" src="scripts/device.js"></script>
+  <script type="text/javascript" src="scripts/reports.js"></script>
+  <script type="text/javascript" src="sql/devicedal.js"></script>
+  <script type="text/javascript" src="sql/reportsdal.js"></script>
+  <script type="text/javascript" src="scripts/neighborshealth.js"></script>
+  <script type="text/javascript" src="scripts/validation.js"></script>
+  <script type="text/javascript" src="jsolait/jsolait.js"></script>
+  <script type="text/javascript" src="scripts/common.js"></script>
+  <script type="text/javascript" src="scripts/command.js"></script>
+  <script type="text/javascript" src="sql/commandsdal.js"></script>  
+  <script type="text/javascript" src="scripts/appsettings.js"></script>
+
+  <!--[if (lte IE 6)|(gte IE 8)]>
+  <style type="text/css">
+     #outer {height:100%;display:table;}
+  </style>
+  <![endif]-->
+
+</head>
+
+<body onload="InitNeighborsHealthPage();">
+<div id="outer">
+<div id="inner">
+<div id="header"></div>
+<div id="content">
+<div id="columnB"></div>
+<!-- START PAGE CONTENT -->        
+<div id="columnA">
+<h2>Device Details</h2>		    		   
+	<table cellpadding="0" cellspacing="0" border="0">
+	<tr>
+		<td>		    
+            <table cellpadding="0" cellspacing="0" width="900px" border="0">
+            	<tr align="center">
+			        <td width="70px" id="tab0"></td>
+	    		    <td width="60px" id="tab1"></td>
+		   	        <td width="110px" id="tab2"></td>
+	  	   	        <td width="120px" id="tab3"></td>
+	   	            <td width="110px" id="tab4"></td>
+			        <!--td width="130px" id="tab5"></td-->
+			        <td width="100px" id="tab6"></td>
+			        <td class="tabButton">&nbsp;</td>
+				</tr>
+		    </table>
+			 
+		    <table cellpadding="0" cellspacing="0" class="containerDiv" width="900px" boder ="1">
+	       		<tr>
+		      		<td colspan="2" align="left">
+			     		<table width="100%" cellpadding="0" cellspacing="0">
+				    		<tr>								
+					       		<td class="windowHeader"></td>
+    						</tr>
+	       				</table>
+	   	       		</td>
+    		  	</tr>    		  
+				<tr>
+			    	<td class="labels" align="left">
+    			   		<strong>EUI-64 Address: </strong><span id="spnEUI64"></span><br />
+   			   	   		<strong>Nickname: </strong><span id="spnNickname"></span><br />
+			    	</td>
+			    	<td align="right" valign="top">
+			        	<input type="button" id="btnBack" value='Back' class="buttonFilter" onclick="BackButtonClicked();" />
+			    	</td>
+		      	</tr>
+				  
+				<tr>
+					<td colspan="2" align="center">
+ 	             	<table cellpadding="0" cellspacing="0" class="containerDiv" width="890px" border="0" style="background-color: #F0F0F0;">             
+    		            <tr>
+            		        <td class="labels" align="right" style="width:100px">Neighbor&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    		<td align="left">				        		
+								<input type="text" id="txtNeighbors" class="inputText" style="width: 160px;" />
+                    		</td>
+                    		<td colspan="2" align="right">
+                        		<input type="button" id="btnSearch" name="btnSearch" value='Search' class="buttonFilter" onclick="Search();" />
+                    		</td>
+                		</tr>             
+                		<tr>
+		            		<td class="labels" align="right">Start Time&nbsp;&nbsp;</td>
+		            		<td align="left" width="250px">
+		                        <input type="text" id="txtStartDate" name="txtStartDate" class="inputText" maxlength="10" style="width: 80px;" /> 
+		                        <script type="text/javascript">	new tcal ({'controlname': 'txtStartDate'}); </script>
+		                        <input type="text" id="txtStartDateHours" name="txtStartDateHours" class="inputText" maxlength="2" style="width: 15px;" /> :
+		                        <input type="text" id="txtStartDateMinutes" name="txtStartDateMinutes" class="inputText" maxlength="2" style="width: 15px;" />
+		                        <select id="ddlStartDateAMPM" name="ddlStartDateAMPM" class="dropdown" style="width: 45px;">
+		                            <option value="AM">AM</option>
+		                            <option value="PM">PM</option>
+		                        </select>		          
+				            </td>	          
+			            	<td class="labels" align="right" style="width:100px">End Time&nbsp;&nbsp;</td>    
+				            <td align="left">
+				                <input type="text" id="txtEndDate" name="txtEndDate" class="inputText" maxlength="10" style="width: 80px;" />
+		                        <script type="text/javascript"> new tcal ({'controlname': 'txtEndDate'}); </script>
+		                        <input type="text" id="txtEndDateHours" name="txtEndDateHours" class="inputText" maxlength="2" style="width: 15px;" /> :
+		                        <input type="text" id="txtEndDateMinutes" name="txtEndDateMinutes" class="inputText" maxlength="2" style="width: 15px;" />
+		                        <select id="ddlEndDateAMPM" name="ddlEndDateAMPM" class="dropdown" style="width: 45px;"> 
+		                            <option value="AM">AM</option>
+		                            <option value="PM">PM</option>
+		                        </select>		          
+				            </td>
+			        	</tr>
+			    	</table>
+					</td>
+				</tr>             
+				<tr>
+					<td class="spacer" colspan="2"></td>
+            	</tr>	      
+	      
+		      	<tr align="center">
+                	<td colspan="2">
+                  		<table cellpadding="0" cellspacing="0" width="890px" border="0">
+                    		<tr align="center">
+                      			<td align="left">		    
+							        <table width="100%" border="0" class="tableHeader">
+					                <tr>	
+					                     <td align="left" class="labels" style="color:#FFFFFF">
+								       	    Items per page
+						                    <select id="ddlRowsPerPage" name="ddlRowsPerPage" class="dropdown" style="width: 60px;" onchange="Search()"> 
+					                            <option value="10">10</option>
+					                            <option value="25">25</option>
+					                            <option value="50">50</option>
+					                            <option value="100">100</option>
+					                            <option value="200">200</option>
+						                    </select> 
+											<span id="spnTotalNoOfRows"></span>
+						                 </td>				
+					                    <td align="right">
+					    				    <a id="anchorFirst">&lt;&lt;</a>&nbsp;
+					    					<a id="anchorPrev">&lt;</a>&nbsp;
+					    					<span id="spnPageNumber"></span>&nbsp;
+					    					<a id="anchorNext">&gt;</a>&nbsp;
+					    					<a id="anchorLast">&gt;&gt;</a>&nbsp;
+					                    </td>
+					                </tr>
+					                </table>
+		    
+								    <div id="tblNeighborsHealth" align="center"></div>		    
+								    <textarea id="neighborshealth_jst" style="display:none;">		    
+								    <table cellpadding="0" cellspacing="0" class="containerDiv" width="100%" border="0">
+								    <tr aligh="center">
+									  <td align="left">
+										<table width="100%" cellpadding="0" cellspacing="0" border="0">
+											<tr>								
+						    					<td class="tableSubHeader" style="width: 200px;" align="center"><a href="javascript:ChangeOrderBy(1)" class="white">Neighbor<span id="col1"></span></a></td>
+												<td class="tableSubHeader" style="width: 150px;" align="center"><a href="javascript:ChangeOrderBy(2)" class="white">Timestamp<span id="col2"></span></a></td>
+												<td class="tableSubHeader" style="width: 100px;" align="center">Flags</td>
+												<td class="tableSubHeader" style="width: 120px;" align="center">Transmitted</td>
+												<td class="tableSubHeader" style="width: 120px;" align="center">Failed</td>
+												<td class="tableSubHeader" style="width: 110px;" align="center">Received</td>
+												<td class="tableSubHeader" style="width: 100px;" align="center">Signal Level</td>
+											</tr>
+											
+						                    {for nh in neighborshealth}
+											
+											<tr>
+												<td class="${nh.cellClass}" align="center">${nh.NeighborAddress64}</td>
+												<td class="${nh.cellClass}" align="center">${nh.TimeStamp}</td>
+						                        <td class="${nh.cellClass}" align="center">${nh.Flags}</td>
+												<td class="${nh.cellClass}" align="center">${nh.Transmitted}</td>
+												<td class="${nh.cellClass}" align="center">${nh.Failed}</td>
+						                        <td class="${nh.cellClass}" align="center">${nh.Received}</td>
+						                        <td class="${nh.cellClass}" align="right">${nh.SignalLevel}</td>                       
+						            		</tr>
+						            		
+						            		{/for}
+						            		
+						            		<tr>
+						    					 <td class="tableHeader" colspan="7">&nbsp;</td>
+											</tr>
+											
+										</table>
+						 			  </td>
+						    		</tr>
+						    		</table>		    
+								    </textarea>
+								</td>     
+							</tr>            
+							<tr >
+								<td class="spacer" colspan="2"></td>
+            				</tr>
+						</table>
+					</td>
+				</tr>                  
+			</table>
+		</td>
+	</tr>
+	</table>
+</div>		  	
+<!-- END PAGE CONTENT -->
+</div>
+</div>
+</div>
+<div id="footer"></div>
+</body>
+</html>

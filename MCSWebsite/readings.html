@@ -1,0 +1,197 @@
+ <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+
+  <title></title>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=8" />
+  <link href="styles/default.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="scripts/date.format.js"></script>
+  <script type="text/javascript" src="scripts/template.js"></script>
+  <script type="text/javascript" src="scripts/login.js"></script>
+  <script type="text/javascript" src="scripts/validation.js"></script>
+  <script type="text/javascript" src="scripts/device.js"></script>
+  <script type="text/javascript" src="sql/readingsdal.js"></script>
+  <script type="text/javascript" src="scripts/readings.js"></script>
+  <script type="text/javascript" src="sql/devicedal.js"></script>
+  <script type="text/javascript" src="scripts/devicechannel.js"></script>
+  <script type="text/javascript" src="sql/devicechanneldal.js"></script>
+  <script type="text/javascript" src="jsolait/jsolait.js"></script>
+  <script type="text/javascript" src="scripts/common.js"></script>
+  <script type="text/javascript" src="scripts/catalogs.js"></script>
+
+  <!--[if (lte IE 6)|(gte IE 8)]>
+  <style type="text/css">
+     #outer {height:100%;display:table;}
+  </style>
+  <![endif]-->
+  
+</head>
+
+<body onload="InitReadingsPage();">
+
+<div id="outer">
+<div id="inner">
+    <div id="header"></div>
+    <div id="content">
+        <div id="columnB"></div>
+        <!-- START PAGE CONTENT -->      
+        <div id="columnA">
+		   <h2>Readings</h2>		    
+		   <table>
+		   <tr>
+		   <td>		   
+            <table cellpadding="0" cellspacing="0" width="950px" border="0">
+            <tr>
+            <td>
+              <table cellpadding="0" cellspacing="0" class="containerDiv" width="950px" border="0" style="background-color: #F0F0F0;padding-left:20px;"">
+              <tr>
+					<td class="labels" style="width:110px">
+					    EUI-64 Address
+					</td>    
+					<td align="left">
+						<input type="text" id="txtDevice" class="inputText" style="width:165px" />
+					</td>
+					<td class="labels" style="width:100px">
+					    Command No 
+					</td>    
+					<td align="left">
+					    <input type="text" id="txtCommandNo" class="inputText" style="width:100px" />
+					</td>   
+					<td align="right" colspan="3">
+					    <input type="button" id="btnSearch" value="Search" class="buttonFilter" onclick="Search();" />
+					</td>             
+              </tr>
+              <tr>
+	              	<td class="labels" style="width:110px">
+						Show Devices
+					</td>
+					<td align="left">    
+	                    <select id="ddlShowDevices" name="ddlShowDevices" class="dropdown" onchange="Search();" style="width: 170px;"> 
+	                    <option value="0">Registered only</option>
+	                    <option value="1">Unregistered only</option>
+	                    <option value="2">All</option>
+	                    </select>&nbsp;                                
+	                </td>
+	                <td class="labels" style="width:100px">
+	                    Name 
+	                </td>                    
+					<td lign="left">
+					    <input type="text" id="txtName" class="inputText" style="width:100px"/>
+	                </td>          
+	                <td class="labels" style="width:110px">
+	                    Device Variable 
+	                </td>    
+	                <td align="left">
+	                    <input type="text" id="txtDeviceVariable" class="inputText" style="width:100px"/>
+	                </td>   
+	                <td align="right">
+	                    <form name="form1" action="/rpc.cgi" enctype="application/x-www-form-urlencoded" method="POST" target="iFrame">
+	                        <input type="hidden" id="hQuery" />
+	                        <input type="hidden" id="call1" name="call1" />
+	                        <input type="submit" id="btnExport" value="Export" class="buttonFilter" onclick="Export();" />                        
+	                        </form>
+	                    <iframe src="about:blank" id="iFrame" name="iFrame" style="display:none;"></iframe>                    
+	                </td>
+              </tr>
+		    </table>		    
+		    </td>
+		    </tr>
+
+            <tr>
+	            <td class="spacer" colspan="1"></td>
+            </tr>     
+		    		    
+		    <tr>
+		    <td>			    
+		        <table width="100%" border="0" class="tableHeader">
+                    <tr>	
+                        <td align="left" class="labels" style="color:#FFFFFF">
+			       	        Items per page
+	                        <select id="ddlRowsPerPage" name="ddlRowsPerPage" class="dropdown" style="width: 60px;" onchange="Search()"> 
+                                <option value="10">10</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                                <option value="200">200</option>
+	                        </select> 
+							<span id="spnTotalNoOfRows"></span>
+	                    </td>   		
+    			        <td align="right">   
+    				        <a id="anchorFirst">&lt;&lt;</a>&nbsp;
+    					    <a id="anchorPrev">&lt;</a>&nbsp;
+    					    <span id="spnPageNumber"></span>&nbsp;
+    					    <a id="anchorNext">&gt;</a>&nbsp;
+    					    <a id="anchorLast">&gt;&gt;</a>&nbsp;
+                        </td>
+                    </tr>
+                </table>
+		    	    
+		    <div id="tblReadings" style="text-align: center;"></div>
+		    
+		    <textarea id="readings_jst" style="display:none;">
+		    
+		    <table cellpadding="0" cellspacing="0" class="containerDiv" width="950px">
+		    <tr>
+			  <td align="left">
+				<table width="100%" cellpadding="0" cellspacing="0" border="0">
+					<tr>								
+						<td class="tableSubHeader" style="width: 5px; text-align: center;">&nbsp;</td>
+     					<td class="tableSubHeader" style="width: 250px; text-align: left;">EUI-64 Address</td>
+						<td class="tableSubHeader" style="width: 150px; text-align: center;">Timestamp</td>
+						<td class="tableSubHeader" style="width: 70px; text-align: center;">Name</td>
+						<td class="tableSubHeader" style="width: 50px; text-align: center;">Cmd No</td>
+						<td class="tableSubHeader" style="width: 70px; text-align: center;">Device Variable</td>
+						<td class="tableSubHeader" style="width: 50px; text-align: center;">Value</td>
+						<td class="tableSubHeader" style="width: 50px; text-align: center;">Classification</td>
+						<td class="tableSubHeader" style="width: 40px; text-align: center;">Unit Code</td>
+						<td class="tableSubHeader" style="width: 50px; text-align: center;">Update Period</td>
+						<td class="tableSubHeader" style="width: 150px; text-align: center;">Last Update</td>
+						<td class="tableSubHeader" style="width: 35px; text-align: center;">Received</td>
+						<td class="tableSubHeader" style="width: 35px; text-align: center;">Missed</td>
+					</tr>
+													
+                    {for r in readings}
+					
+					<tr>
+						<td class="${r.cellClass}" style="text-align: center;">${r.HeightSpacer}</td>
+						<td class="${r.cellClass}" style="text-align: left;">${r.Address64}</td>
+						<td class="${r.cellClass}" style="text-align: center;">${r.ReadingTime}</td>						
+						<td class="${r.cellClass}" style="text-align: center;">${r.ChannelName}</td>
+						<td class="${r.cellClass}" style="text-align: center;">${r.Command}</td>
+						<td class="${r.cellClass}" style="text-align: center;">${r.DeviceVariable}</td>
+						<td class="${r.cellClass}" style="text-align: center;">${r.Value}</td>
+    					<td class="${r.cellClass}" style="text-align: center;">${r.Classification}</td>
+						<td class="${r.cellClass}" style="text-align: center;">${r.UnitCode}</td>
+						<td class="${r.cellClass}" style="text-align: center;">${r.UpdatePeriod}</td>
+						<td class="${r.cellClass}" style="text-align: center;">${r.LastUpdate}</td>
+						<td class="${r.cellClass}" style="text-align: center;">${r.Received}</td>
+						<td class="${r.cellClass}" style="text-align: center;">${r.Missed}</td>
+            		</tr>
+            		
+            		{/for}
+            		
+            		<tr>
+            		    <td class="tableHeader" colspan="13">&nbsp;</td> 
+					</tr>					
+				</table>
+ 			  </td>
+    		</tr>
+    		</table>
+		    </textarea>
+		    </td>
+		    </tr>
+          </table>                    
+          </td>
+          </tr>			
+		</table>
+        </div>  <!--columnA-->
+        <!-- END PAGE CONTENT -->
+    </div>      <!--content-->
+</div>          <!--inner-->
+</div>          <!--outer-->
+<div id="footer"></div>
+
+</body>
+</html>

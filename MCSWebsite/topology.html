@@ -1,0 +1,126 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+
+  <title></title>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=8" />
+  <link href="styles/default.css" rel="stylesheet" type="text/css" />
+  <link href="styles/tooltip.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="scripts/template.js"></script>
+  <script type="text/javascript" src="scripts/login.js"></script>
+  <script type="text/javascript" src="scripts/date.format.js"></script>
+  <script type="text/javascript" src="scripts/command.js"></script>
+  <script type="text/javascript" src="scripts/device.js"></script>
+  <script type="text/javascript" src="sql/topologydal.js"></script>
+  <script type="text/javascript" src="sql/devicedal.js"></script>
+  <script type="text/javascript" src="sql/commandsdal.js"></script>
+  <script type="text/javascript" src="graphics/raphael/raphael.js" charset="utf-8"></script>
+  <script type="text/javascript" src="scripts/topology.js" charset="utf-8"></script>
+  <script type="text/javascript" src="scripts/appsettings.js"></script>
+  <script type="text/javascript" src="jsolait/jsolait.js"></script>
+  <script type="text/javascript" src="scripts/common.js"></script>
+  <script type="text/javascript" src="scripts/reports.js"></script>
+</head>
+
+<body onload="InitTopologyPage()">
+	
+                      
+<div id="outer">
+    <div id="inner">
+        <div id="header"></div>
+
+        <div id="content">
+           	<div id="columnB"></div>
+  <div id="WzTtDiV" style="visibility: hidden; position: absolute; overflow: hidden; padding: 0px; width: 0px; left: 0px; top: 0px;"></div>
+  <script type="text/javascript" src="graphics/wz_tooltip.js"></script>
+
+        <!-- START PAGE CONTENT -->
+        
+        	<div id="columnA" style="scrolable:yes;">
+		      <h2>Network Topology</h2>
+		          
+              <table border="0" width="970px">
+                <tr>
+                  <td width="970px" border="0">
+                    <table width="970px" border="0">
+                    <tr>  
+                      <td align="left" valign="top"  width="60%" class="checklabel">
+                        <input type="button" id="btnZoomOutW" value="-" onclick="ZoomOutTopologyW();" class="buttonList" 
+                        style="cursor:pointer"/><input type="button" id="btnWidth" value="Width" onclick="SetDefaultWidth();" class="buttonList"  
+                        style="cursor:pointer; width: 50px" /><input type="button" id="btnZoomInW" value="+" onclick="ZoomInTopologyW();" class="buttonList" 
+                        style="cursor:pointer"/>
+						<input  type="button" id="btnZoomOutH" value="-" onclick="ZoomOutTopologyH();" class="buttonList" 
+                        style="cursor:pointer"/><input  type="button" id="btnHeight" value="Height" onclick="SetDefaultHeight();" class="buttonList"  
+                        style="cursor:pointer; width: 50px "/><input type="button" id="btnZoomInH" value="+" onclick="ZoomInTopologyH();" class="buttonList" 
+                        style="cursor:pointer"/>
+                        <input type="button" id="btnZoomFitToWindow" value="Fit" onclick="ZoomFitToWindow();" class="buttonList" style="cursor:pointer"/>
+						<input type="button" id="btnZoomNormalSize" value="Normal" onclick="ZoomNormalSize();" class="buttonList" style="cursor:pointer"/>
+						<!--input type="button" id="btnZoomFullScreen" value="Full Screen" onclick="ZoomFullScreen();" class="buttonList" style="cursor:pointer"/-->
+                        <span id="spnDevices" class="checklabel">Devices</span>&nbsp;<select
+                            id="lstDevices" class="dropdown" style="width:175px;" onchange="JavaScript:DevicesChanged();"><option /></select>         
+                      </td>
+                      <td align="left" valign="top" width="40%" class="checklabel">
+                      Show: <label onmouseover="JavaScript:this.style.cursor='pointer';"><input type="radio" id="chkShowLinks" name="chkShow" value="Links" onclick="JavaScript:ShowChanged(1, true);"/>Links</label> 
+                      <label onmouseover="JavaScript:this.style.cursor='pointer';"><input type="radio" id="chkShowServices" name="chkShow" value="Services" onclick="JavaScript:ShowChanged(2, true);" />Services</label>
+                  	  <span id="spnService" class="checklabel"> </span>
+                      <select id="lstServices" class="dropdown" style="width:255px;" onchange="ServiceChanged();"><option /></select> 
+
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="left" valign="top"  width="50%" class="checklabel">                      
+                        <input type="button" id="btnRefresh" name="btnRefresh" value="Refresh" onclick="JavaScript:RefreshTopology();" class="buttonList" style="cursor:pointer"/>
+                        &nbsp;&nbsp;Last refreshed on UTC : <span id="spnRefreshDate"></span>                                         
+                      </td>
+                      <td align="left" valign="top" width="50%" class="checklabel">                      
+                      <label onmouseover="JavaScript:this.style.cursor='pointer';"><input type="checkbox" id="chkShowAllLinks" onclick="JavaScript:ShowAllLinksChanged();" /><span 
+                            id="spnShowAllLinks" class="checklabel">Show&nbsp;all&nbsp;links</span></label>
+                      &nbsp;&nbsp;
+                      <label onmouseover="JavaScript:this.style.cursor='pointer';"><input type="checkbox" id="chkShowSignalQuality" onclick="JavaScript:ShowSignalQualityChanged();" /><span 
+                            id="spnShowSignalQuality" class="checklabel">Show&nbsp;signal&nbsp;quality</span></label>
+                      &nbsp;&nbsp;
+                      <label onmouseover="JavaScript:this.style.cursor='pointer';"><input type="checkbox" id="chkCurveLines" onclick="JavaScript:LineShapeChanged();"/><span 
+                            id="spnCurveLines" class="checklabel">Curve&nbsp;lines</span></label>
+                      </td>
+                    </tr>  
+                    </table>
+                  </td>
+                </tr>
+                <tr>
+                  <td width="970px">
+                    <div id="networkTopology" style="position:relative;left:0px;top:0px;width:968px;height:500px;z-index:2;overflow:auto;" class="containerDiv">
+                      <div id="holder"></div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <table width="970px" border="0" cellspacing="0">
+                      <tr>
+                      <td align="left">
+                        <div id="tblServiceDetail" style="text-align:left;width:570px;height:100px;overflow:auto;" class="containerDiv">
+                        </div>
+                      </td>
+                      <td style="padding:0px 0px 0px 0px" colspan="2">
+                        <div id="divLegend" style="padding-left:10px;text-align: left;width:384px;height:100px;" class="containerDiv">
+                        </div>
+                      </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+              
+		  	</div>
+		  	
+        <!-- END PAGE CONTENT -->
+
+        </div>
+    </div>
+</div>
+
+<div id="footer"></div>
+</body>
+</html>

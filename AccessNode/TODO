@@ -1,0 +1,25 @@
+
+2004 October 13:
+- (M) Compress History data (check it is possible).
+- (H) Store history data in multiple files to avoid slow one file handling.
+- (H) RA put file currently block any activity for some time on large files.
+TRY: use multiple writes (multiple of block size) instead on one large write.
+- (M) Use dispatch parameter on commands, to allow LG commands to mesh and 1xx 
+simultaneously.
+- (M) Move all cc_comm functionality to CommMgr
+- (L) Integrate rf into CommMgr?
+- (A) Use mesh for YSI
+- (H) Third path for comands and responses: 
+	commands from  RA, SM, local 
+	responses to HM, CC, local.
+This way, instead of customizing NC, we will customize add_dnc_command.
+- (M) pipes header change the meaning of next fields : 
+		- MsgType 	- now means FROM 
+		- MsgId - from events to be -1 ( now -1,-2,-3 ... )
+		- new field FROM <- the current msg_type
+																
+
+------------------------------------------------------------------------------
+This file will hold future development ideas or changes to current 
+functionality which is not well implemented now. 
+Any post must have date amd priority. (High Medium Low Attempt)

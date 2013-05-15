@@ -1,0 +1,164 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+
+  <title></title>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=8" />
+  <link href="styles/default.css" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href="calendar/calendar.css" type="text/css" />
+  <script type="text/javascript" src="calendar/calendar_us.js"></script>  
+  <script type="text/javascript" src="scripts/template.js"></script>
+  <script type="text/javascript" src="scripts/date.format.js"></script>
+  <script type="text/javascript" src="scripts/validation.js"></script>
+  <script type="text/javascript" src="scripts/login.js"></script>
+  <script type="text/javascript" src="scripts/device.js"></script>
+  <script type="text/javascript" src="scripts/alerts.js"></script>
+  <script type="text/javascript" src="scripts/alertslog.js"></script>
+  <script type="text/javascript" src="sql/alertsdal.js"></script>
+  <script type="text/javascript" src="sql/devicedal.js"></script>
+  <script type="text/javascript" src="jsolait/jsolait.js"></script>
+  <script type="text/javascript" src="scripts/common.js"></script>
+
+  <!--[if (lte IE 6)|(gte IE 8)]>
+  <style type="text/css">
+     #outer {height:100%;display:table;}
+  </style>
+  <![endif]-->
+
+</head>
+
+<body onload="InitAlertsLogPage();">
+
+<div id="outer">
+<div id="inner">
+<div id="header"></div>
+<div id="content">
+<div id="columnB"></div>
+<!-- START PAGE CONTENT -->       
+<div id="columnA">
+<h2>Alerts</h2> 
+		    
+	<table cellpadding="0" cellspacing="0" width="950px" border="0">
+	<tr><td>		    
+		<table cellpadding="0" cellspacing="0" class="containerDiv" width="950px" border="0" style="background-color: #F0F0F0;">             
+	       	<tr>
+	        	<td class="labels" align="left" style="width:70px">Device Tag</td>
+	        	<td><input type="text" id="txtDeviceTag" class="inputText" style="width: 150px;" maxlength="32"></td>	        	
+	        	<td class="labels" align="left" style="width: 100px">EUI-64 Address</td>
+	        	<td><input type="text" id="txtEUI64Address" class="inputText" style="width: 156px;" maxlength="23"></td>				
+	        	<td align="right" colspan="3"><input type="button" id="btnSearch" value="Search" class="buttonFilter" onclick="Search();" /></td>                
+	      	</tr>
+	                    
+			<tr>
+	        	<td class="labels" align="left">Alert Type</td>                    
+	        	<td><select id="ddlAlertType" class="dropdown" style="width: 156px"> <option /></select></td>
+				<td class="labels" align="left">Start Time</td>
+	        	<td>
+	            	<input type="text" id="txtStartDate" name="txtStartDate" class="inputText" maxlength="10" style="width: 80px;" /> 
+	        		<script type="text/javascript">	new tcal ({'controlname': 'txtStartDate'}); </script>
+	            	<input type="text" id="txtStartDateHours" name="txtStartDateHours" class="inputText" maxlength="2" style="width: 15px;" />:
+	            	<input type="text" id="txtStartDateMinutes" name="txtStartDateMinutes" class="inputText" maxlength="2" style="width: 15px;" />
+	            	<select id="ddlStartDateAMPM" name="ddlStartDateAMPM" class="dropdown" style="width: 45px;">
+	                	<option value="AM">AM</option>
+	                	<option value="PM">PM</option>
+	            	</select>		          
+	        	</td>		          		          
+	        	<td class="labels" align="left">End Time</td>    
+	        	<td>
+	            	<input type="text" id="txtEndDate" name="txtEndDate" class="inputText" maxlength="10" style="width: 80px;" />
+	            	<script type="text/javascript"> new tcal ({'controlname': 'txtEndDate'}); </script>
+	            	<input type="text" id="txtEndDateHours" name="txtEndDateHours" class="inputText" maxlength="2" style="width: 15px;" />:
+	            	<input type="text" id="txtEndDateMinutes" name="txtEndDateMinutes" class="inputText" maxlength="2" style="width: 15px;" />
+	            	<select id="ddlEndDateAMPM" name="ddlEndDateAMPM" class="dropdown" style="width: 45px;"> 
+	                    <option value="AM">AM</option>
+	                    <option value="PM">PM</option>
+		            </select>		                              
+	        	</td> 
+	        	<td align="right">
+	            	<form name="form1" action="/rpc.cgi" enctype="application/x-www-form-urlencoded" method="POST" target="iFrame">
+	                	<input type="hidden" id="hQuery"/>
+	                	<input type="hidden" id="call1" name="call1"/>
+	                	<input type="submit" id="btnExport" value="Export" class="buttonFilter" onclick="Export();" />           
+	           	</form>
+	           	<iframe src="about:blank" id="iFrame" name="iFrame" style="display:none;"></iframe>					                        
+	        	</td>		          
+			</tr>   			  
+		</table>			
+	</td></tr>		    
+
+	<tr><td class="spacer"></td></tr>
+		    
+	<tr><td>
+		<table width="100%" border="0" class="tableHeader">
+        	<tr>	
+            	<td align="left" class="labels" style="color:#FFFFFF">
+			    	Items per page
+	                <select id="ddlRowsPerPage" name="ddlRowsPerPage" class="dropdown" style="width: 60px;" onchange="Search()"> 
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                        <option value="200">200</option>
+                    </select> 
+					<span id="spnTotalNoOfRows"></span>
+                </td>   		
+				<td align="right">   
+    				<a id="anchorFirst">&lt;&lt;</a>&nbsp;
+					<a id="anchorPrev">&lt;</a>&nbsp;
+					<span id="spnPageNumber"></span>&nbsp;
+					<a id="anchorNext">&gt;</a>&nbsp;
+					<a id="anchorLast">&gt;&gt;</a>&nbsp;
+				</td>
+			</tr>
+		</table>
+            
+		<div id="tblAlertsLog" style="text-align: center;"></div>
+		    
+		<textarea id="alerts_jst" style="display:none;">
+		    
+		<table cellpadding="0" cellspacing="0" class="containerDiv" width="950px">
+			<tr>
+				<td align="left">			                    
+					<table width="100%" cellpadding="0" cellspacing="0">
+						<tr>								
+	                        <td class="tableSubHeader" style="width: 200px;" align="center">Device Tag</td>
+							<td class="tableSubHeader" style="width: 60px;" align="center">Nickname</td>						
+							<td class="tableSubHeader" style="width: 200px;" align="left">EUI-64 Address</td>							
+	                        <td class="tableSubHeader" style="width: 150px;" align="left">Alert Time</td>				
+							<td class="tableSubHeader" style="width: 150px;" align="left">Alert Type</td>						
+							<td class="tableSubHeader" style="width: 200px;" align="center">PeerAddress/GraphID</td>									
+	                        <td class="tableSubHeader" style="width: 30px;" align="center">MIC</td>
+	                        						
+						</tr>					
+                    	{for a in alerts}					
+						<tr>
+							<td class="${a.cellClass}" align="center">${a.DeviceTag}</td>						
+							<td class="${a.cellClass}" align="center">${a.Nickname}</td>
+							<td class="${a.cellClass}" align="left">${a.EUI64Address}</td>							
+							<td class="${a.cellClass}" align="left">${a.AlertTime}</td>							
+							<td class="${a.cellClass}" align="left">${a.AlertType}</td>
+							<td class="${a.cellClass}" align="center">${a.PeerAddressGraphID}</td>							
+							<td class="${a.cellClass}" align="center">${a.MIC}</td>
+	            		</tr>	            		
+            			{/for}            		
+            			<tr><td class="tableHeader" colspan="7">&nbsp;</td></tr>					
+					</table>
+				</td>
+    		</tr>
+    	</table>
+		</textarea>		    
+	</td></tr>
+    <tr><td class="spacer"></td></tr>
+    </table>
+	
+</div>			  	
+<!-- END PAGE CONTENT -->
+</div>
+</div>
+</div>
+<div id="footer"></div>
+
+</body>
+</html>

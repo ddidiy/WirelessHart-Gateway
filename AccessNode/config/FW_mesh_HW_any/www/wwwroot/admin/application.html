@@ -1,0 +1,144 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+	<title>Application configuration page</title>
+	<link rel="stylesheet" type="text/css" href="/css/admin.css" />
+	<script type="text/javascript" src="/jsolait/jsolait.js"></script>
+	<script type="text/javascript">jsolait.baseURI="/jsolait";</script>
+	<script type="text/javascript">
+	//<![CDATA[
+
+		var serviceURL = "/rpc.cgi";
+		var methods = ["config.getVariable", "config.setVariable", "file.exists", "misc.remoteCmd"];
+		var jsonrpc=null;
+		var setgetResult=null;
+		try {
+			var jsonrpc = imprt("jsonrpc");
+		}	catch(e) {
+			alert(e);
+		}
+		var service = new jsonrpc.ServiceProxy(serviceURL, methods);
+
+		function SetAppSettings()
+		{
+			var RetVal=true;
+			var v_LogUpload=document.getElementById("ftpLogUpload");
+			var v_Host=document.getElementById("ftpHost");
+			var v_User=document.getElementById("ftpUser");
+			var v_Pass=document.getElementById("ftpPass");
+			var v_Folder=document.getElementById("ftpFolder");
+			var v_ReadingsHistory=document.getElementById("isaReadingsHistory");
+			var v_cfgFile = "/access_node/ftp_log_upload.sh";
+			try{
+				if( v_LogUpload.checked )
+				{
+					var ret = service.file.exists( { file: v_cfgFile } );
+					if( ret.length == 0 ) 
+						service.misc.remoteCmd( { cmd : "cp /access_node/firmware/ftp_log_upload.sh /access_node/ftp_log_upload.sh" } );
+					service.config.setVariable( { configFile: v_cfgFile, varName:"HOST", varValue : v_Host.value } );
+					service.config.setVariable( { configFile: v_cfgFile, varName:"USER", varValue : v_User.value } );
+					service.config.setVariable( { configFile: v_cfgFile, varName:"PASS", varValue : v_Pass.value } );
+					service.config.setVariable( { configFile: v_cfgFile, varName:"FTPDIR_BASE", varValue : v_Folder.value } );
+					service.config.setVariable( { group : "MONITOR_HOST", varName:"UseReadingsHistory", varValue : v_ReadingsHistory.checked } );
+					var txt = 'sed -i "s/READINGS_HISTORY.*/READINGS_HISTORY = ' 
+						+ ((v_ReadingsHistory.checked) ? "true" : "false") 
+						+ ';/" /access_node/firmware/www/wwwroot/app/scripts/appsettings.js';
+					service.misc.remoteCmd( { cmd : txt } );
+				}
+				else
+				{
+					service.misc.remoteCmd( { cmd : "rm /access_node/ftp_log_upload.sh" } );
+				}
+			}catch(e)
+			{	
+				document.getElementById('getsetFtpUpload').innerHTML = e;
+				RetVal=false;
+			}
+			return RetVal;
+		}
+		
+		function GetAppSettings()
+		{
+			var v_LogUpload=document.getElementById("ftpLogUpload");
+			var v_Host=document.getElementById("ftpHost");
+			var v_User=document.getElementById("ftpUser");
+			var v_Pass=document.getElementById("ftpPass");
+			var v_Folder=document.getElementById("ftpFolder");
+			var v_ReadingsHistory=document.getElementById("isaReadingsHistory");
+			var v_cfgFile = "/access_node/ftp_log_upload.sh";
+			try  {
+				var ret = service.file.exists( { file: v_cfgFile } );
+				v_LogUpload.checked = ( ret.length > 0 );
+				if( ! v_LogUpload.checked )// read the script in firmware to get the values
+				{
+					v_cfgFile = "/access_node/firmware/ftp_log_upload.sh";
+				}
+				v_Host.value   = service.config.getVariable( { configFile: v_cfgFile, varName:"HOST"} );
+				v_User.value   = service.config.getVariable( { configFile: v_cfgFile, varName:"USER"} );
+				v_Pass.value   = service.config.getVariable( { configFile: v_cfgFile, varName:"PASS"} );
+				v_Folder.value = service.config.getVariable( { configFile: v_cfgFile, varName:"FTPDIR_BASE"} );
+				try{
+					ret = service.config.getVariable( { group : "MONITOR_HOST" , varName:"UseReadingsHistory"} );
+				}catch(e){
+					ret.value = 0;
+				}
+				v_ReadingsHistory.checked = ( ( ret !=0 ) && ( ret != 'false' ) );
+				EnableDisable();
+			}catch(e)
+			{
+				document.getElementById('getsetFtpUpload').innerHTML = e;
+				RetVal=false;
+			}
+		}
+
+		function EnableDisable()
+		{
+			var v_LogUpload=document.getElementById("ftpLogUpload");
+			var v_Host=document.getElementById("ftpHost");
+			var v_User=document.getElementById("ftpUser");
+			var v_Pass=document.getElementById("ftpPass");
+			var v_Folder=document.getElementById("ftpFolder");
+			var v_ReadingsHistory=document.getElementById("isaReadingsHistory");
+			if(v_LogUpload.checked){
+				v_Host.disabled=false;
+				v_User.disabled=false;
+				v_Pass.disabled=false;
+				v_Folder.disabled=false;
+				v_ReadingsHistory.disabled=false;
+			}else{
+				v_Host.disabled=true;
+				v_User.disabled=true;
+				v_Pass.disabled=true;
+				v_Folder.disabled=true;
+				v_ReadingsHistory.disabled=true;
+			}
+		}
+		</script>
+</head>
+	
+<body onload="GetAppSettings();">	
+	<div id="em"><span>Application Configuration</span>
+	<hr/>
+	<table cellspacing=5>
+	<tr><td>FTP&nbsp;log&nbsp;upload</td><td><input type="checkbox" id="ftpLogUpload" onclick="EnableDisable();"/></td></tr>
+	<tr><td>Host</td><td><input type="text" id="ftpHost" size="20"/></td></tr>
+	<tr><td>User</td><td><input type="text" id="ftpUser" size="20"/></td></tr>
+	<tr><td>Pass</td><td><input type="password" id="ftpPass" size="20"/></td></tr>
+	<tr><td>Folder</td><td><input type="text" id="ftpFolder" size="20"/></td></tr>
+	</table>
+	<hr/>
+	<table>
+	<tr><td>ISA Readings History</td><td><input type="checkbox" id="isaReadingsHistory"/>(DANGEROUS)</td></tr>
+	<tr><td/>
+	<td align="left"><button type="button" onClick="document.getElementById('getsetFtpUpload').innerHTML='';
+		document.getElementById('getsetFtpUpload').innerHTML=
+		SetAppSettings()?	'Set operation OK': 'Set operation FAILED';">Set</button>
+	</tr>
+	</table>
+	<div id="getsetFtpUpload"><em></em></br></div>
+	</div>
+    </body>
+</html>

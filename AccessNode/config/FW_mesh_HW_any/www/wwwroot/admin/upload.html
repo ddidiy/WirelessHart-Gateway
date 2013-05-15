@@ -1,0 +1,37 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+            "http://www.w3.org/TR/html4/loose.dtd">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" type="text/css" href="/css/admin.css">
+	<title>Upload application website</title>
+	<script type="text/javascript" src="/jsolait/jsolait.js"></script>
+	<script type="text/javascript">jsolait.baseURI="/jsolait/";</script>
+	<script type="text/javascript">
+		var jsonrpc=null;
+
+		try {
+			var jsonrpc = imprt("jsonrpc");
+		} catch(e) {
+			alert(e);
+		}
+
+		function startUpload () {
+			document.form1.call1.value = jsonrpc.JSONRPCMethod("a").jsonRequest(1,"misc.fileUpload", {script:"/access_node/firmware/www/unpack_web.sh"}) ;
+			return 1 ;
+		}
+	</script>
+</head>
+
+<body>
+	<div id="em"><span>Upload Application Website</span>
+	<form name="form1" action="/rpc.cgi" enctype="multipart/form-data" method="POST" target="iFrame">
+		<input type='hidden' name='call1' id='call1'/>
+		<input type='file' name='figure2' value='2'/>
+		<input type="submit" value="Upload" onClick="javascript:startUpload();"/>
+	</form >
+	</div>
+
+	<div id="result"><span></span></div>
+	<iframe src="about:blank" id="iFrame" name="iFrame"  style="display:none; visibility:hidden;"></iframe>
+</body>
+</html>

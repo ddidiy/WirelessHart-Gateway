@@ -1,0 +1,191 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+
+  <title></title>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=8" />
+  <link href="styles/default.css" rel="stylesheet" type="text/css" />  
+  <script type="text/javascript" src="scripts/template.js"></script>
+  <script type="text/javascript" src="scripts/login.js"></script>
+  <script type="text/javascript" src="scripts/command.js"></script>
+  <script type="text/javascript" src="scripts/date.format.js"></script>
+  <script type="text/javascript" src="sql/reportsdal.js"></script>
+  <script type="text/javascript" src="scripts/networkhealth.js"></script>
+  <script type="text/javascript" src="jsolait/jsolait.js"></script>
+  <script type="text/javascript" src="scripts/common.js"></script>
+  <script type="text/javascript" src="sql/commandsdal.js"></script>  
+  <script type="text/javascript" src="sql/devicedal.js"></script>  
+  <script type="text/javascript" src="scripts/appsettings.js"></script>
+  <script type="text/javascript" src="scripts/device.js"></script>
+  
+  <!--[if (lte IE 6)|(gte IE 8)]>
+  <style type="text/css">
+     #outer {height:100%;display:table;}
+  </style>
+  <![endif]-->
+
+</head>
+
+<body onload="InitNetworkHealth();">
+<div id="outer">
+<div id="inner">
+<div id="header"></div>
+<div id="content">
+<div id="columnB"></div>
+<!-- START PAGE CONTENT -->        
+<div id="columnA">
+<h2>Network Health</h2> 			    
+    <table width="950px"><tr><td>
+        
+    <table cellpadding="0" cellspacing="0" class="containerDiv" width="100%" style="background-color: #F0F0F0;" border="0">
+   	  <tr>
+      	 <td colspan="6"></td>
+	  </tr>
+	  <tr align="left">
+   	    <td style="width:140px" class="labels">	   	    
+		    <strong>Devices Count:</strong><br/>
+		    <strong>Join Count:</strong><br/> 
+		    <strong>Start Date (UTC):</strong><br/>
+			<strong>Current Date (UTC):</strong><br/>  			   	    
+		</td>
+		<td align="left" width="260">			
+			<span id="spnDeviceCount"></span><br/>
+			<span id="spnJoinCount"></span><br/>
+			<span id="spnStartDate"></span><br/>
+			<span id="spnCurrentDate"></span><br/>
+		</td>
+	    <td style="width:100px" class="labels">
+		   	   <strong>Generated:</strong><br/>
+		   	   <strong>All Tx:</strong><br/>
+		   	   <strong>No ACK:</strong<br/>
+		   	   <strong>Terminated:</strong><br/>
+			   <strong>All Rx:</strong><br/>			   	   	  
+	    </td>               
+		<td align="left" width="125px">
+			<span id="spnGenerated"></span><br/>
+			<span id="spnAllTx"></span><br/>
+			<span id="spnNoACK"></span><br/>
+			<span id="spnTerminated"></span><br/>
+			<span id="spnAllRx"></span><br/>			
+		</td>
+	    <td style="width:100px" class="labels">
+		   	   <strong>DLL Failures:</strong><br/>
+		   	   <strong>NL Failures:</strong><br/>
+		   	   <strong>CRC Error:</strong><br/>
+		   	   <strong>Nonce Lost:</strong><br/>   			   	  
+	    </td>            
+		<td align="left" width="125px">
+			<span id="spnDLLFailures"></span><br/>
+			<span id="spnNLFailures"></span><br/>
+			<span id="spnCRCError"></span><br/>
+			<span id="spnNonceLost"></span><br/>
+		</td>   
+      </tr>     
+	  <tr>
+	  	<td colspan="6"><hr/></td>
+	  </tr>
+	  <tr>
+		<td class="labels" align="left" style="width:80px">
+			Show Devices
+		</td>
+	    <td colspan="5" align="left">    
+        	<select id="ddlShowDevices" name="ddlShowDevices" class="dropdown" onchange="ShowItems();" style="width: 165px;"> 
+                <option value="0">Registered only</option>
+                <option value="1">Unregistered only</option>
+                <option value="2">All</option>
+            </select>                                
+		</td>
+	  </tr>
+    </table>
+    
+    </td></tr>
+    <tr><td class="spacer"> </td></tr>
+    <tr><td>
+
+    <table width="100%" border="0" class="tableHeader">
+        <tr>	
+	        <td align="left" class="labels" style="color:#FFFFFF">
+	       	    Items per page
+                <select id="ddlRowsPerPage" name="ddlRowsPerPage" class="dropdown" style="width: 60px;" onchange="ShowItems()"> 
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                    <option value="200">200</option>
+                </select> 
+				<span id="spnTotalNoOfRows"></span>
+             </td>   		
+             <td align="right">
+                <a id="anchorFirst">&lt;&lt;</a>&nbsp;
+				<a id="anchorPrev">&lt;</a>&nbsp;
+				<span id="spnPageNumber"></span>&nbsp;
+				<a id="anchorNext">&gt;</a>&nbsp;
+				<a id="anchorLast">&gt;&gt;</a>&nbsp;	   	    
+            </td>
+        </tr>
+    </table>
+    		    
+    <div id="tblNetDevices" style="text-align: center;"></div>
+    
+    <textarea id="netdevices_jst" cols="0" rows="0" style="display:none;">
+    
+    <table cellpadding="0" cellspacing="0" class="containerDiv" width="950px">
+    <tr>
+	  <td align="left">
+		<table width="100%" cellpadding="0" cellspacing="0" border="0">
+			<tr>								
+				<td class="tableSubHeader" style="width: 170px;" align="center">EUI-64 Address</td>
+				<td class="tableSubHeader" style="width: 70px;" align="center">Join Count</td>
+				<td class="tableSubHeader" style="width: 70px;" align="center">Power Status</td>
+				<td class="tableSubHeader" style="width: 70px;" align="center">Generated</td>
+				<td class="tableSubHeader" style="width: 70px;" align="center">All Tx</td>
+    			<td class="tableSubHeader" style="width: 70px;" align="center">No ACK</td>
+				<td class="tableSubHeader" style="width: 70px;" align="center">Terminated</td>
+				<td class="tableSubHeader" style="width: 70px;" align="center">All Rx</td>
+				<td class="tableSubHeader" style="width: 70px;" align="center">DLL Failure</td>
+				<td class="tableSubHeader" style="width: 70px;" align="center">NL Failure</td>
+				<td class="tableSubHeader" style="width: 70px;" align="center">CRC Error</td>
+				<td class="tableSubHeader" style="width: 70px;" align="center">Nonce Lost</td>
+			</tr>
+		
+            {for nd in networkhealthdevices}
+			
+			<tr>
+				<td class="${nd.cellClass}" style="width: 170px;" align="left">${nd.Address64}</td>
+				<td class="${nd.cellClass}" style="width: 70px;" align="center">${nd.JoinCount}</td>
+				<td class="${nd.cellClass}" style="width: 70px;" align="center">${nd.PowerStatus}</td>
+				<td class="${nd.cellClass}" style="width: 70px;" align="center">${nd.Generated}</td>
+				<td class="${nd.cellClass}" style="width: 70px;" align="center">${nd.AllTx}</td>
+				<td class="${nd.cellClass}" style="width: 70px;" align="center">${nd.NoACK}</td>
+				<td class="${nd.cellClass}" style="width: 70px;" align="center">${nd.Terminated}</td>
+				<td class="${nd.cellClass}" style="width: 70px;" align="center">${nd.AllRX}</td>
+				<td class="${nd.cellClass}" style="width: 70px;" align="center">${nd.DLLFailure}</td>
+				<td class="${nd.cellClass}" style="width: 70px;" align="center">${nd.NLFailure}</td>
+				<td class="${nd.cellClass}" style="width: 70px;" align="center">${nd.CRCError}</td>
+				<td class="${nd.cellClass}" style="width: 70px;" align="center">${nd.NonceLost}</td>
+    		</tr>
+    		
+    		{/for}
+
+            <tr>	
+    		    <td class="tableHeader" colspan="12">&nbsp;</td>					
+			</tr>
+		</table>
+		  </td>
+	</tr>
+	</table>		    
+    </textarea>
+    </td>
+    </tr>            
+  </table>		    		    
+</div>		  	
+<!-- END PAGE CONTENT -->
+</div>
+</div>
+</div>
+<div id="footer"></div>
+
+</body>
+</html>

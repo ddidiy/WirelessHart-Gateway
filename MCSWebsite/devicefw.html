@@ -1,0 +1,197 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+
+  <title></title>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=8" />
+  <link href="styles/default.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="scripts/template.js"></script>
+  <script type="text/javascript" src="scripts/login.js"></script>
+  <script type="text/javascript" src="scripts/validation.js"></script>
+  <script type="text/javascript" src="scripts/date.format.js"></script>
+  <script type="text/javascript" src="scripts/device.js"></script>
+  <script type="text/javascript" src="scripts/command.js"></script>
+  <script type="text/javascript" src="scripts/devicefw.js"></script>
+  <script type="text/javascript" src="sql/commandsdal.js"></script>
+  <script type="text/javascript" src="sql/devicedal.js"></script>
+  <script type="text/javascript" src="jsolait/jsolait.js"></script>
+  <script type="text/javascript" src="scripts/common.js"></script>
+
+  <!--[if (lte IE 6)|(gte IE 8)]>
+  <style type="text/css">
+     #outer {height:100%;display:table;}
+  </style>
+  <![endif]-->
+
+</head>
+
+<body onload="InitDeviceFwPage();">
+
+<div id="outer">
+<div id="inner">
+    <div id="header"></div>
+    <div id="content">
+        <div id="columnB"></div>
+        <!-- START PAGE CONTENT -->
+        <div id="columnA">
+		    <h2>Device Firmwares</h2>
+		    <table border="0">
+		    <tr>
+		    <td>
+	        <table cellpadding="0" cellspacing="0" width="950px" border="0">           
+            <tr>
+                <td colspan="6" align="left">
+				    <input type="button" id="btnExecute" name="btnExecute" value='Execute' class="buttonSimple" onclick="NavigateToExecute();" />
+					<input type="button" id="btnFWFiles" name="btnFWFiles" value='FW Files' class="buttonSimple" onclick="NavigateToFWFiles();" />
+                </td>
+            </tr>                   
+
+            <tr>
+                <td>		    
+                <table cellpadding="0" cellspacing="0" class="containerDiv" width="950px" border="0" style="background-color: #F0F0F0;">		               
+                <tr>
+                    <td colspan="1" class="labels" align="left" style="width:140px">
+                        Device &nbsp;......................&nbsp;
+                    </td>
+                    <td colspan="1" align="left">
+				        <select id="ddlDevice" name="ddlDevice" class="dropdown" style="width: 200px;"> <option /> </select>
+                    </td>
+                    <td colspan="1" class="labels" align="left" style="width:140px">
+                        Command Status &nbsp;.......&nbsp;
+                    </td>
+                    <td colspan="1" align="left">
+				        <select id="ddlCommandStatus" name="ddlCommandStatus" class="dropdown" style="width:100px"> <option /> </select>
+                    </td>   
+                    <td colspan="1" align="right">
+                        <input type="button" id="btnSearch" value="Search" class="buttonFilter" onclick="Search();" />
+                    </td>                    
+                </tr>
+              
+                 <tr>
+                    <td colspan="1" class="labels" align="left">
+                        Command &nbsp;.................&nbsp;
+                    </td>
+                    <td colspan="1" align="left">
+				        <select id="ddlCommand" name="ddlCommand" class="dropdown" style="width: 200px;" > <option /> </select>
+                    </td>
+                    <td colspan="2" class="labels">
+                        <img src="styles/images/syscomm.gif" width="18px" height="18px" alt="" /> 
+                        <label style="vertical-align:top">System generated command.</label>
+                    </td>
+                    <td colspan="1" align="right">
+                        <form name="form1" action="/rpc.cgi" enctype="multipart/form-data" method="POST" target="iFrame">
+                            <input type="hidden" id="hQuery" />
+                            <input type="hidden" id="call1" name="call1" />                                      		    
+                            <input type="submit" id="btnExport" value="Export" class="buttonFilter" onclick="Export();" />                            
+                        </form>
+                        <iframe src="about:blank" id="iFrame" name="iFrame" style="display:none;"></iframe>					                    
+                    </td>
+                 </tr>
+            </table>
+		    
+		    </td></tr>
+		    
+		   <tr>
+		       <td class="spacer" colspan="6">
+		      </td>
+		   </tr>
+		    
+		    <tr><td>
+		    		    
+		    <table width="100%" border="0" class="tableHeader">
+                <tr>	
+                    <td align="left" class="labels" style="color:#FFFFFF">
+			       	    Items per page
+	                    <select id="ddlRowsPerPage" name="ddlRowsPerPage" class="dropdown" style="width: 60px;" onchange="Search()"> 
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                            <option value="200">200</option>
+	                    </select> 
+	                </td>   		
+    			    <td align="right">   
+    				    <a id="anchorFirst">&lt;&lt;</a>&nbsp;
+    					<a id="anchorPrev">&lt;</a>&nbsp;
+    					<span id="spnPageNumber"></span>&nbsp;
+    					<a id="anchorNext">&gt;</a>&nbsp;
+    					<a id="anchorLast">&gt;&gt;</a>&nbsp;
+                    </td>
+                </tr>
+            </table>
+		    
+		    <div id="tblFirmwareCommands" style="text-align: center;"></div>
+		    
+		    <textarea id="fwcommands_jst" style="display:none;">
+		    
+		    <table cellpadding="0" cellspacing="0" class="containerDiv" width="950px">
+		    <tr>
+			  <td colspan="9" align="left">
+				<table width="100%" cellpadding="0" cellspacing="0" border="0">
+					<tr>								
+     					<td class="tableSubHeader" style="width: 25px;" align="center">&nbsp;</td>
+						<td class="tableSubHeader" style="width: 100px;" align="center">Tracking No.</td>
+						<td class="tableSubHeader" style="width: 100px;" align="center">EUI-64 Address</td>
+						<td class="tableSubHeader" style="width: 100px;" align="center">Command</td>
+						<td class="tableSubHeader" style="width: 210px;" align="center">Parameters</td>
+						<td class="tableSubHeader" style="width:  60px;" align="center">Status</td>
+						<td class="tableSubHeader" style="width:  80px;" align="center">Posted Time</td>
+						<td class="tableSubHeader" style="width:  80px;" align="center">Response Time</td>
+	        			<td class="tableSubHeader" style="width: 190px;" align="center">Response</td>
+					</tr>
+					
+                    {for c in commands}
+					
+					<tr>
+						<td class="${c.cellClass}" style="width: 25px;" align="center">${c.Icon}</td>
+						<td class="${c.cellClass}" style="width: 100px;" align="center">${c.TrackingNo}</td>
+						<td class="${c.cellClass}" style="width: 100px;" align="center">${c.Address64}</td>
+						<td class="${c.cellClass}" style="width: 100px;" align="center">${c.CommandName}</td>
+						<td class="${c.cellClass}" style="width: 210px;" align="left">${c.Parameters}</td>
+						<td class="${c.cellClass}" style="width:  60px;" align="center">${c.Status}</td>
+						<td class="${c.cellClass}" style="width:  80px;" align="center">${c.PostedTime}</td>
+    					<td class="${c.cellClass}" style="width:  80px;" align="center">${c.ResponseTime}</td>
+   						<td class="${c.cellClass}" style="width: 190px;" align="center">${c.Response}</td>
+            		</tr>
+            		
+            		{/for}
+            		
+            		<tr>								
+    					<td class="tableHeader" colspan="9">&nbsp;</td>
+					</tr>
+					
+				</table>
+ 			  </td>
+    		</tr>
+
+    		</table>
+		    
+		    </textarea>
+		    
+		    	</td></tr>
+
+              </table>
+              
+              </td></tr>
+		
+	       <tr>
+		      	<td class="spacer" colspan="2"></td>
+		  </tr>
+		
+		  </table>
+		    
+		  	</div>
+		  	
+		  	
+        <!-- END PAGE CONTENT -->
+
+        </div>
+    </div>
+</div>
+
+<div id="footer"></div>
+
+</body>
+</html>

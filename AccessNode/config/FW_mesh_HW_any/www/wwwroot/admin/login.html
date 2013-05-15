@@ -1,0 +1,49 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+            "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" type="text/css" href="/css/admin.css">
+	<title>Login</title>
+	<script type="text/javascript" src="/jsolait/jsolait.js"></script>
+	<script type="text/javascript">jsolait.baseURI="/jsolait/";</script>
+	<script type="text/javascript" >
+		//<![CDATA[
+		var serviceURL = "/rpc.cgi";
+		var methods = [ "user.login" ];
+		var jsonrpc=null;
+
+		try {
+			var jsonrpc = imprt("jsonrpc");
+		} catch(e) {
+			alert(e);
+		}
+
+		function test( userId, passId) {
+			try {
+				var usrEl = document.getElementById(userId) ;
+				var pasEl = document.getElementById(passId) ;
+				var service = new jsonrpc.ServiceProxy(serviceURL, methods);
+				var str_rsp = service.user.login( {user:usrEl.value, pass:pasEl.value} ) ;
+				if ( str_rsp ) {
+					top.location="/admin/admin.html";
+				}
+
+				return false ;
+			} catch(e) {
+				alert(e);
+			}
+			return true ;
+		}
+	</script>
+</head>
+<body>
+	<div id="em"><span>Login</span></div><br/>
+	<form ACTION="" onSubmit="return test('user','pass')" METHOD="POST">
+		<div class="nice"><span>User:</span><span><input TYPE="text" id="user"/></span></div>
+		<br>
+		<div class="nice"><span>Pass:</span><span><input TYPE="password" id="pass"/></span></div><br>
+		<input type="submit" value="Login" />
+	</form>
+</body>
+</html>

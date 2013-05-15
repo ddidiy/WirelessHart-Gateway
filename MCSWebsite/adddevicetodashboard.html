@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+  <title></title>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=8" />
+  <link href="styles/default.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="jsolait/jsolait.js"></script>  
+  <script type="text/javascript" src="scripts/login.js"></script>
+  <script type="text/javascript" src="scripts/common.js"></script> 
+  <script type="text/javascript" src="scripts/date.format.js"></script>
+  <script type="text/javascript" src="scripts/validation.js"></script>  
+  <script type="text/javascript" src="sql/devicedal.js"></script>  
+  <script type="text/javascript" src="scripts/adddevicetodashboard.js"></script>
+
+  <!--[if (lte IE 6)|(gte IE 8)]>
+  <style type="text/css">
+     #outer {height:100%;display:table;}
+  </style>
+  <![endif]-->
+</head>
+
+<body onload="InitAddDeviceToDashboardPage();">
+<div id="outer">
+<div id="inner">
+<div id="header"></div>
+<div id="content">
+<div id="columnB"></div>
+<!-- START PAGE CONTENT -->        
+<div id="columnA">
+<h2>Add device to dashboard</h2>
+		    
+	<table cellpadding="0" cellspacing="0" class="containerDiv" width="400px" border="0">
+		<tr>
+			<td colspan="3" align="left">
+				<table width="100%" cellpadding="0" cellspacing="0">
+					<tr>							
+						<td class="windowHeader"><span id="spnAddOrEdit"></span> Device</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		  	
+		<tr><td class="spacer" colspan="3"></td></tr>		
+    	   
+    	<tr>			
+			<td width="30px"></td>
+	   		<td width="80px" class="labels">Devices:</td>
+			<td ><select id="ddlDevices" class="dropdown" style="width:230px" onchange="DeviceChanged();"></select></td>
+	   	</tr>
+ 		<tr>
+ 			<td></td>
+ 			<td class="labels">Channels:</td>
+			<td><select id="ddlChannels" class="dropdown" style="width:230px"></select></td>
+ 		</tr>                	
+ 		<tr>
+ 			<td></td>
+ 			<td class="labels">Min value:</td>
+			<td><input type="text" id="txtMinValue" class="inputText"/></td>
+ 		</tr>                	
+ 		<tr>
+ 			<td></td>
+ 			<td class="labels">Max value:</td>
+			<td><input type="text" id="txtMaxValue" class="inputText"/></td>
+ 		</tr>                	
+
+        <tr><td class="spacer" colspan="3"></td></tr>
+
+		<tr>
+ 			<td></td>
+ 			<td class="labels">Slot number:</td>
+			<td><select id="ddlSlotNumber" class="dropdown" style="width:70px"></select></td>
+ 		</tr>  
+		<tr>
+ 			<td></td>
+ 			<td class="labels">Gauge:</td>
+			<td valign="center">
+			<input type="radio" name="rbGaugeType" value="1" checked="checked"><img src="styles/images/gauges/full-small.png"/></input> 
+            <input type="radio" name="rbGaugeType" value="2" ><img src="styles/images/gauges/half-small.png"/></input>
+			</td>
+ 		</tr>  
+
+    	<tr>											
+			<td colspan="3" align="center">
+				<input type="submit" id="btnOk" value="Ok" class="button" onclick="AddDeviceToDashboard();" />
+				<input type="button" id="btnCancel" value="Cancel" class="button" onclick="Cancel();" />
+			</td>
+		</tr>	   	
+        <tr>
+	    	<td class="spacer" colspan="3"></td>
+    	</tr>    	   	
+		</table>
+                    
+</div>		  	
+<!-- END PAGE CONTENT -->
+</div>
+</div>
+</div>
+<div id="footer"></div>
+</body>
+
+</html>

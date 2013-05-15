@@ -1,0 +1,169 @@
+{
+	"isa100.bbr.getEngMode": {
+		"description":"",
+		"type":"method",
+		"return":"integer",
+		"params": null,
+		"extra":{"users": ["ADMIN_USER"] }
+	},
+	"isa100.bbr.setEngMode": {
+		"description":"",
+		"type":"method",
+		"return":"boolean",
+		"params":{
+				"mode":{"type":"integer", "description": "" },
+				"channel": {"type":"integer","description":"" },
+				"pwrlvl": {"type":"integer","description":"" }
+			},
+		"extra":{"users": ["ADMIN_USER"] }
+	},
+	"isa100.getSystemStatus": {
+		"description":"Get system status",
+		"type":"method",
+		"return":["string"],
+		"params": null,
+		"extra":{"users": ["ADMIN_USER"] }
+	},
+	"isa100.sm.setDevice": {
+		"description":"Add/Update a device in SystemMonitor provisioning file (the white list)",
+		"type":"method",
+		"return":"boolean",
+		"params":{
+				"deviceValue":{"type":"string","required":true,
+					"format": "<EUI64Specifier>, <Key>, <Subnet>",
+					"description": "<EUI64Specifier> is <EUI64> or <EUI64> - <EUI64> (single OR range)" },
+				"deviceType": {"type":"string","required":false, "default":"DEVICE",
+					"description":"Accepted values: DEVICE / BACKBONE / GATEWAY" }
+			},
+		"extra":{"users": ["ADMIN_USER"] }
+	},
+	"isa100.sm.delDevice": {
+		"description":"Remove a device from SystemMonitor provisioning file (the white list)",
+		"type":"method",
+		"return":"boolean",
+		"params":{
+				"deviceValue":{"type":"string","required":true,
+					"primaryKey" : "<EUI64Specifier>",
+					"description": "Only <EUI64Specifier> is required, the rest of the value( <Key>, <Subnet>) is irrelevant. <EUI64Specifier> is <EUI64> or <EUI64> - <EUI64>" },
+				"deviceType": {"type":"string","required":false, "default":"DEVICE",
+					"description":"Accepted values: DEVICE / BACKBONE / GATEWAY" }
+			},
+		"extra":{"users": ["ADMIN_USER"] }
+	},
+	"isa100.modbus.server.setRow": {
+		"description":"Add/Update a row in MODBUS configuration file",
+		"type":"method",
+		"return":"boolean",
+		"params":{
+				"section": {"type":"string","required":false, "default":"HOSTS",
+					"description":"Accepted values: HOSTS / INPUT_REGISTERS / HOLDING_REGISTERS" },
+				"rowValue":{"type":"string","required":true,
+					"format_Host": "<UnitId>, <EUI64>",
+					"format_Register" : "<start_address>, <word_count>,<TSAPID>,<ObjId>,<AttrId>,<Idx1>,<Idx2>,<MethId>",
+					"primaryKey_Host" : "<UnitId>",
+					"primaryKey_Register" : "<start_address>" }
+			},
+		"extra":{"users": ["ADMIN_USER"] }
+	},
+	"isa100.modbus.server.delRow": {
+		"description":"Remove a row from MODBUS configuration file",
+		"type":"method",
+		"return":"boolean",
+		"params":{
+				"section": {"type":"string","required":false, "default":"HOSTS",
+					"description":"Accepted values: HOSTS / INPUT_REGISTERS / HOLDING_REGISTERS" },
+				"rowValue":{"type":"string","required":true,
+					"format_Host": "<UnitId>, <EUI64>",
+					"format_Register" : "<start_address>, <word_count>,<TSAPID>,<ObjId>,<AttrId>,<Idx1>,<Idx2>,<MethId>",
+					"primaryKey_Host" : "<UnitId>",
+					"primaryKey_Register" : "<start_address>",
+					"description" : "only primaryKey is required"  }
+			},
+		"extra":{"users": ["ADMIN_USER"] }
+	},
+	"isa100.modbus.gw.setRow": {
+		"description":"Add/Update a row in MODBUS configuration file",
+		"type":"method",
+		"return":"boolean",
+		"params":{
+				"section": {"type":"string","required":false, "default":"HOSTS",
+					"description":"Accepted values: HOSTS / INPUT_REGISTERS / HOLDING_REGISTERS" },
+				"mapType": {"type":"string","required":false, "default":"0"},
+				"rowValue":{"type":"string","required":true,
+					"format_Host": "<UnitId>, <EUI64>",
+					"format_Register" : "<start_address>, <word_count>,<TSAPID>,<ObjId>,<AttrId>,<Idx1>,<Idx2>,<MethId>",
+					"primaryKey_Host" : "<UnitId>",
+					"primaryKey_Register" : "<start_address>" }
+			},
+		"extra":{"users": ["ADMIN_USER"] }
+	},
+	"isa100.modbus.gw.delRow": {
+		"description":"Remove a row from MODBUS configuration file",
+		"type":"method",
+		"return":"boolean",
+		"params":{
+				"section": {"type":"string","required":false, "default":"HOSTS",
+					"description":"Accepted values: HOSTS / INPUT_REGISTERS / HOLDING_REGISTERS" },
+				"mapType": {"type":"string","required":false, "default":"0"},
+				"rowValue":{"type":"string","required":true,
+					"format_Host": "<UnitId>, <EUI64>",
+					"format_Register" : "<start_address>, <word_count>,<TSAPID>,<ObjId>,<AttrId>,<Idx1>,<Idx2>,<MethId>",
+					"primaryKey_Host" : "<UnitId>",
+					"primaryKey_Register" : "<start_address>",
+					"description" : "only primaryKey is required"  }
+			},
+		"extra":{"users": ["ADMIN_USER"] }
+	},
+	"isa100.mh.setPublisher": {
+		"description":"Add/Update a publisher in MonitorHost publishers list",
+		"type":"method",
+		"return":"boolean",
+		"params":{
+				"eui64":{"type":"string","required":true}, 
+				"concentrator":{ "type":"string","required":true,
+					"format": "<CO_TSAP_ID>,<CO_ID>,<Data_Period>,<Data_Phase>,<Data_StaleLimit>,<ContentVersion>"
+				},
+				"channels":{"description":"Channel values",
+							"type":"array", "required":true,
+							"format": "<TSAP_ID>,<ObjID>,<AttrID>,<Index1>, <Index2>, <format>, <name>, <unit_of_measurement>"
+				},
+				"trigger": {"description":"Trigger values. Only for WHART implementation",
+				            "type":"string","required":false,
+							"format": "<command number>,<burst message>,<burst trigger mode selection>,<device variable classification>,<units code>,<trigger level>"
+				}
+			},
+		"extra":{"users": ["ADMIN_USER"] }
+	},
+	"isa100.mh.delPublisher": {
+		"description":"Remove a publisher from MonitorHost publishers list",
+		"type":"method",
+		"return":"boolean",
+		"params":{ 
+                "eui64":{"type":"string","required":true},
+                "burst":{
+                    "description":"Burst value. Only for WHART implementation",
+                    "type":"string",
+					"required":false
+					}
+				},
+		"extra":{"users": ["ADMIN_USER"] }
+	},
+	"isa100.sm.getLogLevel": {
+		"description":"Get SM Log level",
+		"type":"method",
+		"return":"string",
+		"params":null,
+		"extra":{"users": ["ADMIN_USER"] }
+	},
+	"isa100.sm.setLogLevel": {
+		"description":"Set SM log level",
+		"type":"method",
+		"return":"boolean",
+		"params":{
+				"logLevel":{"type":"string","required":true}
+		},
+		"extra":{"users": ["ADMIN_USER"] }
+	},
+	"description":"The ISA100 RPC methods.",
+	"include":[{"schemas":["core/sqlite.json"],"hw":["vr900"]}]
+}

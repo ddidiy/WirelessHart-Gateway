@@ -1,0 +1,94 @@
+{
+	"sqldal.open": {
+                "description": "Open a DB",
+                "extra": {
+                        "users": ["ADMIN_USER"]
+                }, 
+                "params": {
+                        "dbFile": {
+                                "default": ":memory:", 
+                                "description": "The database absolute filename", 
+                                "optional": true, 
+                                "type": "string"
+                        },
+			"mode": {
+                                "default":"read",
+				"description":"DB open flags",
+				"optional":true,
+				"type": "string",
+				"enum":["read","write","create"],
+				"format":"mode1|mode2"
+			}
+                }, 
+                "return": "boolean",
+                "type": "method"
+        },
+	"sqldal.lastInsertedRowId": {
+                "description": "Return the ID of the last inserted row.", 
+                "extra": {
+                        "users": ["ADMIN_USER"]
+                }, 
+                "params": null,
+                "return": "integer",
+                "type": "method"
+        },
+	"sqldal.rowsAffected": {
+                "description": "Return the count of rows affected by the last execution.", 
+                "extra": {
+                        "users": ["ADMIN_USER"]
+                }, 
+                "params": null,
+                "return": "integer",
+                "type": "method"
+        },
+	"sqldal.execute": {
+                "description": "Execute a sql query.",
+                "extra": {
+                        "users": ["ADMIN_USER"]
+                }, 
+                "params": {
+                        "query": {
+                                "description": "The query to be executed", 
+                                "type": "string"
+                        },
+                        "mode": {
+                                "description": "es",
+                                "type": "string",
+				"optional":true,
+				"default":"read"
+                        },
+                        "timeout": {
+                                "description": "If the execution is not successfull in 'timeout' seconds, then the call fails", 
+                                "type": "integer",
+				"optional":true,
+				"default":10
+                        }
+                }, 
+                "return": "boolean",
+                "type": "method"
+        },
+	"sqldal.getCsv": {
+                "description": "Execute a SQL query and send back the result csv formatted",
+                "extra": {
+                        "users": ["ADMIN_USER"]
+                }, 
+                "params": {
+                        "query": {
+                                "description": "The query to be executed", 
+                                "type": "string"
+                        }
+                }, 
+                "return": "string",
+                "type": "method"
+        },
+	"sqldal.close": {
+                "description": "Close a previously open DB",
+                "extra": {
+                        "users": ["ADMIN_USER"]
+                }, 
+                "params": null,
+                "return": "boolean",
+                "type": "method"
+        },
+	"description":"SQL DAL RPC methods."
+}

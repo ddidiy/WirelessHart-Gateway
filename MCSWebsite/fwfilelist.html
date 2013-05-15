@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+
+  <title></title>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=8" />
+  <link href="styles/default.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="scripts/template.js"></script>
+  <script type="text/javascript" src="scripts/login.js"></script>
+  <script type="text/javascript" src="scripts/date.format.js"></script>
+  <script type="text/javascript" src="scripts/firmware.js"></script>
+  <script type="text/javascript" src="sql/firmwaredal.js"></script>
+  <script type="text/javascript" src="scripts/fwfilelist.js"></script>
+  <script type="text/javascript" src="jsolait/jsolait.js"></script>
+  <script type="text/javascript" src="scripts/common.js"></script>
+
+  <!--[if (lte IE 6)|(gte IE 8)]>
+  <style type="text/css">
+     #outer {height:100%;display:table;}
+  </style>
+  <![endif]-->
+
+</head>
+
+<body onload="InitFirmwareFileListPage();">
+
+<div id="outer">
+    <div id="inner">
+        <div id="header"></div>
+
+        <div id="content">
+           	<div id="columnB"></div>
+
+        <!-- START PAGE CONTENT -->
+        
+        	<div id="columnA">
+		    <h2>Firmware files</h2>
+		    
+
+             <table cellpadding="0" cellspacing="0" width="900px" border="0">
+              <tr>
+                <td colspan="2" align="left">
+				    <input type="button" id="btnUpload" value='Upload' class="buttonSimple" onclick="NavigateToUpload();" />
+                </td>    
+                <td colspan="4" align="right">
+					<input type="button" id="btnRefresh" value='Refresh' class="buttonSimple" onclick="Refresh();" />
+					<input type="button" id="btnBack" value='Back' class="buttonSimple" onclick="Back();" />
+                </td>
+              </tr>    
+		    </table>
+		    <div id="tblFirmwares" style="text-align: center;"></div>
+		    		    
+		    <textarea id="firmwares_jst" style="display:none;">
+		    
+		    <table cellpadding="0" cellspacing="0" class="containerDiv" width="900px">
+		    <tr>
+			  <td colspan="9" align="left">
+				<table width="100%" cellpadding="0" cellspacing="0" border="0">
+					<tr>								
+    					<td class="tableHeader" style="width:190px;" align="center">File Name</td>
+						<td class="tableHeader" style="width: 70px;" align="center">Version</td>
+						<td class="tableHeader" style="width:200px;" align="center">Firmware Type</td>
+						<td class="tableHeader" style="width:150px;" align="center">Upload Status</td>
+						<td class="tableHeader" style="width:190px;" align="center">Description</td>
+						<td class="tableHeader" style="width:100px;" align="center">Upload Date</td>
+					</tr>
+					
+                    {for f in firmwares}
+					
+					<tr>
+						<td class="${f.cellClass}" style="width:190px;" align="left">${f.FileName}</td>
+						<td class="${f.cellClass}" style="width: 70px;" align="center">${f.Version}</td>
+						<td class="${f.cellClass}" style="width:200px;" align="left">${f.FirmwareTypeName}</td>
+						<td class="${f.cellClass}" style="width:150px;" align="left">${f.UploadStatusName}</td>
+						<td class="${f.cellClass}" style="width:190px;" align="left">${f.Description}</td>
+						<td class="${f.cellClass}" style="width:100px;" align="center">${f.UploadDate}</td>
+            		</tr>
+            		
+            		{/for}
+            		
+            		<tr>								
+    					<td class="tableHeader" colspan="6" align="right">
+    					   <a id="anchorFirst">&lt;&lt;</a>&nbsp;
+    					   <a id="anchorPrev">&lt;</a>&nbsp;
+    					   <span id="spnPageNumber"></span>
+    					   &nbsp;
+    					   <a id="anchorNext">&gt;</a>&nbsp;
+    					   <a id="anchorLast">&gt;&gt;</a>&nbsp;
+                        </td>
+					</tr>
+				</table>
+ 			  </td>
+    		</tr>
+
+    		</table>
+		    
+		    </textarea>
+		    
+		    <table><tr><td></td></tr></table>
+		    
+		  	</div>
+		  	
+        <!-- END PAGE CONTENT -->
+
+        </div>
+    </div>
+</div>
+
+<div id="footer"></div>
+
+</body>
+</html>

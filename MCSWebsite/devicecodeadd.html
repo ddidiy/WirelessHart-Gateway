@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+
+  <title></title>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=8" />
+  <link href="styles/default.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="jsolait/jsolait.js"></script>
+  <script type="text/javascript" src="scripts/login.js"></script>
+  <script type="text/javascript" src="scripts/appsettings.js"></script>
+  <script type="text/javascript" src="scripts/common.js"></script>
+  <script type="text/javascript" src="sql/devicedal.js"></script>
+  <script type="text/javascript" src="scripts/validation.js"></script>
+  <script type="text/javascript" src="scripts/devicecodeadd.js"></script>
+  <script type="text/javascript" src="scripts/device.js"></script>
+ 
+
+   <!--[if (lte IE 6)|(gte IE 8)]>
+  <style type="text/css">
+     #outer {height:100%;display:table;}
+  </style>
+  <![endif]-->
+
+</head>
+
+<body onload="InitDeviceCodeAddPage();">
+
+<div id="outer">
+    <div id="inner">
+        <div id="header"></div>
+
+        <div id="content">
+           	<div id="columnB"></div>
+
+        <!-- START PAGE CONTENT -->
+        
+        	<div id="columnA">
+		    <h2>Add/Edit Device Code</h2>
+		    <form name="form1" action="/rpc.cgi" enctype="multipart/form-data" method="post" target="iFrame">
+              <input type="hidden" name="call1" id="call1" />
+		    <table cellpadding="0" cellspacing="0" class="containerDiv" width="550px">
+              <tr>
+                <td>
+                  <table cellpadding="0" cellspacing="0" width="550px" border="0">
+  		            <tr>
+                      <td  colspan="3">
+ 	                      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+				    	    <tr><td class="windowHeader"><span id="winHeader">Add/Edit Device Code</span></td></tr>
+ 			              </table>
+ 			          </td>
+                    </tr>
+       	            <tr>
+        		      <td class="spacer" colspan="3"></td>
+      		        </tr>
+                    <tr>                      
+                      <td align="right" width="30%" colspan="2">Code: &nbsp;</td>
+                      <td align="left" width="70%">
+                      	<input id="txtCode" type="text"/>
+                      </td>
+                    </tr>
+                    <tr>
+        		      <td class="spacer" colspan="3"></td>
+      		        </tr>
+                    <tr>
+                      <td align="right" width="30%" colspan="2">Model: &nbsp;</td>
+                      <td align="left" width="70%">
+                      	<input id="txtModel" type="text" maxlength="100" style="width: 250px"/>
+                      </td>
+                    </tr>
+                    <tr>
+        		      <td class="spacer" colspan="3"></td>
+      		        </tr>
+                    <tr>
+                      <td align="right" width="30%" colspan="2">Company: &nbsp;</td>
+                      <td align="left" width="70%">
+                      	<input id="txtCompany" type="text" maxlength="100" style="width: 250px"/>
+                      </td>
+                    </tr>
+                    <tr>
+        		      <td class="spacer" colspan="3"></td>
+      		        </tr>
+
+  		            <tr>
+                      <td width="30%" colspan="2"></td>  
+                      <td align="left" width="70%">
+                        <input type="submit" id="btnSave" value="Save" onclick="AddEdit();" class="button"/>
+                        <input type="button" id="btnCancel" value="Back" onclick="Back();" class="button"/>
+	                  </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+    		  <tr>
+    			<td align="center">
+    		      <span id="spnOperationResultAdd"></span>
+                </td>
+    		  </tr>
+		    </table>
+            </form>
+            <iframe src="about:blank" id="iFrame" name="iFrame"  style="display:none; visibility:hidden;"></iframe>
+		  	</div>
+		  	
+        <!-- END PAGE CONTENT -->
+
+        </div>
+    </div>
+</div>
+
+<div id="footer"></div>
+
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+            "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Access Node Administration</title>
+	<script type="text/javascript">
+		function operationDoneListener( text) {
+			innerHTML="";
+			if ( text )
+			{
+				if ( text.result )
+				{
+					innerHTML="Operation complete." + "<br>Log results:<br><pre>" + text.result+"</pre>";
+				}
+				else if ( text.error )
+				{
+					innerHTML="Operation failed."   + "<br>Log results:<br><pre>" + text.error+"</pre>";
+				}
+			}
+			parent.frames['showframe'].document.getElementById('result').innerHTML = innerHTML ;
+		}
+	</script>
+</head>
+<frameset  border="0" frameborder="0" framespacing="0" cols="210,*">
+  <frame noresize="noresize" src="navigation.html">
+  <frame noresize="noresize" src="empty.html" name="showframe">
+</frameset>
+</html>

@@ -1,0 +1,503 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<STYLE TYPE="text/css" MEDIA=screen>
+
+
+#outer 
+{
+    margin:auto;
+    min-height:100%;
+    margin-top:-40px;/*footer height - this drags the outer 40px up through the top of the monitor */
+}
+
+/* #inner protects any floats in the content from clearing the :before float */
+#inner 
+{
+    overflow:hidden;
+}
+
+.windowHeader
+{
+        color: #FFF;
+        background-color: #1D374F;
+        font-family: Verdana, Arial, Helvetica, sans-serif;
+        font-size: 11px;
+        font-weight: 700;
+        padding: 2px 5px 2px 10px;
+        vertical-align: middle;
+}
+
+.containerDiv
+{
+        border: 1px solid #1D374F;
+}
+
+.spacer
+{
+        font-size: 0px;
+        height: 10px;
+}
+
+.spacerBIG
+{
+        font-size: 0px;
+        height: 100px;
+}
+
+.button
+{
+        font-family: Verdana, Arial, Helvetica, sans-serif;
+        font-size: 11px;
+        padding: 2px 10px 2px 10px;
+        margin: 10px;
+        cursor: pointer;
+        width: 70px;
+}
+
+.buttonRestart
+{
+        font-family: Verdana, Arial, Helvetica, sans-serif;
+        font-size: 11px;
+        padding: 2px 10px 2px 10px;
+        margin: 3px;
+        cursor: pointer;
+        width: 70px;
+}
+
+.inputText
+{
+        border: solid 1px #1D374F;
+        background-color: #FFFFFF;
+        font-family: Verdana, Arial, Helvetica, sans-serif;
+        font-size: 11px;
+    width: 150px;
+}
+
+.dropdown
+{
+        border: solid 1px #1D374F;
+        background-color: #FFFFFF;
+        font-family: Verdana, Arial, Helvetica, sans-serif;
+        font-size: 11px;
+    width: 154px;
+}
+
+.labels
+{
+        color: #1D374F;         
+        font-family: Verdana, Arial, Helvetica, sans-serif;
+        font-size: 11px;        
+        padding: 2px 0px 2px 10px
+}
+
+.listAlternateItem
+{
+    background-color : #EEEEEE;
+}
+
+.opResultRed
+{
+        color: red;             
+        font-family: Verdana, Arial, Helvetica, sans-serif;
+        font-size: 11px;
+    font-weight : bold ;
+        padding: 2px 0px 2px 10px
+}
+
+.opResultGreen
+{
+        color: green;           
+        font-family: Verdana, Arial, Helvetica, sans-serif;
+        font-size: 11px;
+    font-weight : bold ;
+        padding: 2px 0px 2px 10px
+}
+
+.buttonCell
+{
+        border-top: solid 1px #1D374F;
+}
+
+
+/** BASIC */
+
+html
+{
+    height:100%;/* needed to base 100% height on something known*/
+}
+
+body 
+{
+    height:100%;/* needed to base 100% height on something known*/
+        margin: 0px;
+        padding: 0px;
+        background: url(images/img02.jpg) repeat-x left top;
+        line-height: 20px;
+        text-align: justify;
+        font-family:Verdana, Arial, Helvetica, sans-serif;
+        font-size: 11px;
+        color: #666666;
+}
+
+/*Opera Fix*/
+body:before 
+{
+    content:"";
+    height:100%;
+    float:left;
+    width:0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+        font-weight: normal;
+}
+
+a {
+        color: #0077dd;
+}
+
+a:hover {
+        text-decoration: none;
+}
+
+.list1 {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+}
+
+.list1 a {
+        background: url(images/img01.gif) no-repeat left 60%;
+        padding-left: 12px;
+}
+
+.list2 {
+        margin: 0;
+        list-style: none;
+}
+
+.list2 a {
+        background: url(images/img01.gif) no-repeat left 60%;
+        padding-left: 12px;
+}
+
+img {
+        border: none;
+}
+
+img.left {
+        float: left;
+        margin: 3px 20px 0px 0px;
+}
+
+/** HEADER */
+
+#header {
+        width: 778px;
+        margin: 0px auto;
+        padding: 1em;
+        height: 90px;
+        color: #254360;
+        font-size: 16px;
+        border-top:40px solid #fff; /* soak up negative margin and allows header to start at top of page*/
+}
+
+#header h1 {
+        margin: 0px;
+        padding: 20px 0px 0px 0px;
+        text-transform: uppercase;
+        font-weight: bold;
+}
+
+#header h2 {
+        margin: 0 0 0 -80px;
+        padding: 0px 0px 0px 95px;
+        text-transform: uppercase;
+        font-weight: bold;
+        font-size: 13px;
+}
+
+/** CONTENT */
+
+#content {
+        width: 778px;
+        margin: 0px auto;
+        padding: 0px 0px 20px 0px;
+}
+
+.contentLogin {
+        width: 778px;
+        margin: 0px auto;
+        padding: 150px 0px 20px 0px;
+}
+
+#columnA {
+        float: right;
+        width: 538px;
+        padding-left: 20px;
+        border-left: 1px dashed #EEEEEE;
+}
+
+#columnA h2 {
+        height: 22px;
+        border-bottom: 1px dashed #EEEEEE;
+        font-size: 12pt;
+        font-weight: bold;
+}
+
+#columnB {
+        float: left;
+        width: 200px;
+}
+
+#columnB h3 {
+        height: 22px;
+        border-bottom: 1px dashed #EEEEEE;
+        border-spacing: 2px;
+        font-size: 11pt;
+        font-weight: bold;
+}
+
+/** FOOTER */
+
+#footer 
+{
+    margin:auto;
+        width:100%;
+    height:40px;/* must match negative margin of #outer */
+        background: url(images/img03.gif) repeat-x left top;
+        text-align: center;
+    clear:both;
+}
+
+#footer p 
+{
+        margin: 0px;
+        padding: 10px 0px 0px 0px;
+        font-size: 10px;
+        color: #FFFFFF;
+}
+</style>
+
+<head>
+
+    <title>Profile update</title>
+    <meta http-equiv="content-type" content="text/html; charset=us-ascii" />
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+    <link href="styles/default.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="../jsolait/jsolait.js"> </script>
+    <script type="text/javascript" >
+  
+        jsolait.baseURI         = "/jsolait";
+        
+        var serviceURL          = "/rpc.cgi";
+        var methods             = ["misc.remoteCmd"];
+        var jsonrpc             = null;
+                var profileResetSH      = "update_profile.sh reset"
+        var profilePreserveSH   = "update_profile.sh preserve"
+
+//controls wether exception details are shown
+
+var DEBUG = false;
+
+/*****************************************************************************
+    HandleException()
+ *****************************************************************************/
+function HandleException(ex, msg)
+{
+    //session expired case
+    if (ex.message != null && ex.message == "Login first.")
+    {
+        top.location.href = "login.html?exp";
+
+        return;
+    }
+    if(!DEBUG)
+    {
+        alert(msg);
+    }
+    else
+    {
+        alert(msg + "\n" + ex);
+    }
+}
+
+/*****************************************************************************
+    InitJSON()
+ *****************************************************************************/
+function InitJSON()
+{
+    try 
+        {
+        jsonrpc = imprt("jsonrpc");
+    } 
+        catch (e) 
+        {
+        alert(e);
+    }
+}
+
+/*****************************************************************************
+    ReadConfig()
+ *****************************************************************************/
+function ReadConfig() {
+
+    try
+    {
+        var service = new jsonrpc.ServiceProxy(serviceURL, methods);
+ 
+        CONFIG = service.config.getConfig({});
+    }
+    catch(e)
+    {
+        HandleException(e, "Unexpected error reading config !");
+    }
+}
+
+/*****************************************************************************
+    InitPage()
+ *****************************************************************************/
+function InitPage() 
+{
+    InitJSON();
+    
+    //ReadConfig();
+}
+
+function DisplayOperationResult(controlName, msg) {
+
+    var control = document.getElementById(controlName);
+
+    control.className = "opResultGreen";
+
+    control.innerHTML = msg;
+}
+
+function ClearOperationResults() {
+
+    ClearOperationResult("spnOperationResult");
+}
+
+function ClearOperationResult(controlName) { //to do, mai elegant
+
+    DisplayOperationResult(controlName, "");
+
+    var control = document.getElementById(controlName);
+
+    control.className = "";
+}
+
+function ProfileReset()
+{
+    try
+    {
+        var service = new jsonrpc.ServiceProxy(serviceURL, methods);
+ 
+        if (service)
+        {
+            var result = service.misc.remoteCmd({cmd : "update_profile.sh reset"});
+            
+            if (result)
+            {
+                DisplayOperationResult("spnOperationResult","Profile updated");
+            }
+        }
+    }
+    catch(e)
+    {
+        HandleException(e, "Unexpected error updating profile!");
+    }
+}
+
+function ProfilePreserve()
+{
+    try
+    {
+        var service = new jsonrpc.ServiceProxy(serviceURL, methods);
+ 
+        if (service)
+        {
+            var result = service.misc.remoteCmd({cmd : "update_profile.sh preserve"});
+            
+            if (result)
+            {
+                DisplayOperationResult("spnOperationResult","Profile updated");
+            }
+        }
+    }
+    catch(e)
+    {
+        HandleException(e, "Unexpected error updating profile!");
+    }
+}
+
+</script>
+</head>
+
+<body onload="InitPage();">
+
+    <div id="content">
+        <div id="columnA">
+            <h2>Reset Profile</h2>
+            <table cellpadding="0" cellspacing="0" class="containerDiv" width="460px">
+                <tr>
+                    <td colspan="2" align="left">
+                        <table width="100%" cellpadding="0" cellspacing="0">
+                            <tr>
+                                <td class="windowHeader">Options</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            
+                <tr>
+                    <td class="spacer" colspan="2"></td>
+                </tr>
+                
+                <tr valign="top">
+                    <td>
+                        <table cellpadding="0" cellspacing="4" border="0">
+                            <tr >
+                                <td class="labels" align="left" >
+                                    Reset to the default firmware profile &nbsp;............................&nbsp;
+                                </td>
+                            
+                                <td>
+                                    <input type="button" id="btnReset" value='Reset' class="buttonSimple" onclick="ProfileReset();"/>
+                                </td>    
+                            </tr>   
+                            
+                            <tr>
+                                <td class="labels" align="left" >
+                                    Preserve user dependent variables (except the ones forced
+                                    by firmware) &nbsp;..............................................................&nbsp;
+                                </td>
+                            
+                                <td>
+                                    <input type="button" id="btnPreserve" value='Preserve' class="buttonSimple" onclick="ProfilePreserve();" />                     
+                                </td>
+                            </tr>               
+                        </table>    
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td colspan="2" align="center">
+                        <span id="spnOperationResult"></span>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td class="spacer" colspan="2"></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    </table>
+    </div>
+
+    <div id="footer"></div>
+</body>
+</html>

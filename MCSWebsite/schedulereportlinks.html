@@ -1,0 +1,232 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+
+  <title></title>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=8" />
+  <link href="styles/default.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="scripts/template.js"></script>
+  <script type="text/javascript" src="scripts/login.js"></script>
+  <script type="text/javascript" src="scripts/devicetabs.js"></script>
+  <script type="text/javascript" src="scripts/date.format.js"></script>
+  <script type="text/javascript" src="scripts/device.js"></script>
+  <script type="text/javascript" src="scripts/reports.js"></script>
+  <script type="text/javascript" src="sql/devicedal.js"></script>
+  <script type="text/javascript" src="sql/reportsdal.js"></script>
+  <script type="text/javascript" src="scripts/schedulereportlinks.js"></script>
+  <script type="text/javascript" src="jsolait/jsolait.js"></script>
+  <script type="text/javascript" src="scripts/common.js"></script>
+
+  <!--[if (lte IE 6)|(gte IE 8)]>
+  <style type="text/css">
+     #outer {height:100%;display:table;}
+  </style>
+  <![endif]-->
+
+</head>
+
+<body onload="InitScheduleReportLinksPage();">
+
+<div id="outer">
+    <div id="inner">
+        <div id="header"></div>
+
+        <div id="content">
+           	<div id="columnB"></div>
+
+        <!-- START PAGE CONTENT -->
+        
+        	<div id="columnA">
+		    <h2>Device Details</h2>
+		    
+           <table cellpadding="0" cellspacing="0" width="900px" border="0">
+            <tr align="center">
+                <td width="70px" id="tab0"></td>
+                <td width="60px" id="tab1"></td>
+                <td width="110px" id="tab2"></td>
+                <td width="120px" id="tab3"></td>
+                <td width="110px" id="tab4"></td>
+                <!--td width="130px" id="tab5"></td-->
+                <td width="100px" id="tab6"></td>
+                <td class="tabButton">&nbsp;</td>
+            </tr>
+            </table>  
+		    <table cellpadding="0" cellspacing="0" class="containerDiv" width="900px">
+  	          <tr>
+		      	 <td colspan="2" align="left">
+			     	<table width="100%" cellpadding="0" cellspacing="0">
+				    	<tr>								
+					       	<td class="windowHeader"></td>
+    					</tr>
+	       			</table>
+	   	       	</td>
+    		  </tr>
+    		  
+    		  <tr>
+			    <td colspan="1" class="labels" align="left">
+    			   <strong>EUI-64 Address: </strong><span id="spnEUI64"></span><br />
+    			   <strong>Nickname: </strong><span id="spnNickname"></span><br />
+   			   	   <strong>Superframe ID: </strong><span id="spnSuperframeID"></span><br />
+			    </td>
+			    <td colspan="1" align="right" valign="top">
+       	          <input type="button" id="btnBack" name="btnBack" value='Back' class="buttonFilter" onclick="BackButtonClicked();" />
+                </td>
+
+		      </tr>
+		      
+              <tr>
+		        <td class="spacer" colspan="2"></td>
+		      </tr>
+
+              <tr align="center">
+                <td colspan="2">
+		          <table cellpadding="0" cellspacing="0" width="99%" border="0">
+                    <tr>
+                      <td>
+		    		    <table cellpadding="0" cellspacing="0" class="containerDiv" width="100%" border="0" style="background-color: #F0F0F0;">
+                          <tr>
+                            <td colspan="1" class="labels" align="left" style="width:80px">Nickname</td>  
+                            <td colspan="1" align="left">
+                              <select id="ddlNeighborDevice" class="dropdown" style="width:200px"> <option /> </select>                              
+                            </td>                            
+                            <td colspan="1" class="labels" style="width:100px">Link type</td>
+                            <td colspan="1" align="left" >
+                                <select id="ddlLinkType" class="dropdown" style="width:150px"> <option /> </select>
+                            </td>
+                            <td colspan="1" align="right">
+                                <input type="button" id="btnSearch" value='Search' class="button" onclick="Search();" />
+                            </td>                                                     						
+		                  </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>  
+
+              <tr>
+		        <td class="spacer" colspan="3">
+		        </td>
+		      </tr>
+
+		      <tr>
+		        <td colspan="3" align="center">
+
+		    <table width="99%" border="0" class="tableHeader">
+                <tr>	
+    			    <td align="left" class="labels" style="color:#FFFFFF">
+    			        Items per page
+    			        <select id="ddlRowsPerPage" name="ddlRowsPerPage" class="dropdown" style="width: 50px;" onchange="Search()">
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                            <option value="200">200</option>
+                        </select>
+						<span id="spnTotalNoOfRows"></span>
+                    </td>
+                    <td align="right">
+    				    <a id="anchorFirst">&lt;&lt;</a>&nbsp;
+    					<a id="anchorPrev">&lt;</a>&nbsp;
+    					<span id="spnPageNumber"></span>&nbsp;
+    					<a id="anchorNext">&gt;</a>&nbsp;
+    					<a id="anchorLast">&gt;&gt;</a>&nbsp;
+                    </td>
+                </tr>
+            </table>
+                <div id="tblScheduleReportLinks"></div>
+    		    
+    		    <textarea id="schedulereportlinks_jst" style="display:none;">
+    		    
+    		    <table cellpadding="0" cellspacing="0" class="containerDiv" width="99%">
+    		    <tr>
+    			  <td align="left">
+    				<table width="100%" cellpadding="0" cellspacing="0" border="0">
+    					<tr>								
+    						<td class="tableSubHeader" style="width:130px;" align="center">Nickname</td>
+    						<td class="tableSubHeader" style="width:80px;" align="center">Slot Index</td>
+    						<td class="tableSubHeader" style="width:100px;" align="center">Channel Offset</td>
+    						<td class="tableSubHeader" style="width:80px;" align="center">Transmit</td>
+    						<td class="tableSubHeader" style="width:80px;" align="center">Receive</td>
+    						<td class="tableSubHeader" style="width:100px;" align="center">Shared</td>
+    						<td class="tableSubHeader" style="width:250px;" align="center">Link Type</td>    						
+    					</tr>
+    					
+                        {for srl in schedulereportlinks}
+    					
+    					<tr>
+    						<td class="${srl.cellClass}" align="center">${srl.Nickname}</td>
+    						<td class="${srl.cellClass}" align="center">${srl.SlotIndex}</td>
+    						<td class="${srl.cellClass}" align="center">${srl.ChannelOffset}</td>
+    						<td class="${srl.cellClass}" align="center">${srl.Transmit}</td>
+    						<td class="${srl.cellClass}" align="center">${srl.Receive}</td>
+    						<td class="${srl.cellClass}" align="center">${srl.Shared}</td>
+    						<td class="${srl.cellClass}" align="center">${srl.LinkType}</td>    						
+                		</tr>
+                		
+                		{/for}
+                		
+                		<tr>
+        					  <td class="tableHeader" colspan="7">&nbsp;</td>
+    					</tr>
+    					
+    				</table>
+     			  </td>
+        		</tr>
+    
+        		</table>
+    		    
+    		    </textarea>
+
+                </td>
+              </tr>
+              
+              <tr>
+			    <td class="spacer" colspan="2"></td>
+		      </tr>
+		      
+              <!--tr>
+			    <td class="spacer" colspan="2"></td>
+		      </tr-->
+
+		      <!--tr>
+		        <td colspan="3" align="center">
+		          <table cellpadding="0" cellspacing="1" class="containerDiv" width="800px">
+    		        <tr>
+    			      <td align="left" class="labels" >
+ 	                    <div id="divRFChannels"></div>
+       	              </td>
+       	            </tr>
+	              </table>
+		          <table cellpadding="0" cellspacing="1" class="containerDiv" width="800px">
+       	            <tr>
+                       <td align="center" class="labels">
+                        <font color="#000000">
+                          <span style="background:#3737FF;border-style:solid;border-width:1px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Clear &nbsp;&nbsp;&nbsp;&nbsp;
+               	          <span style="background:#FF3737;border-style:solid;border-width:1px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Blacklisted &nbsp;&nbsp;&nbsp;&nbsp;
+     	                </font>
+                       </td>
+                    </tr>
+	              </table>
+                </td>
+              </tr-->
+		   		
+              <!--tr>
+			    <td class="spacer" colspan="2"></td>
+		      </tr-->
+		    </table>
+		    
+		  	</div>
+		  	
+        <!-- END PAGE CONTENT -->
+
+        </div>
+    </div>
+</div>
+
+<div id="footer"></div>
+
+</body>
+</html>

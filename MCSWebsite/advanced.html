@@ -1,0 +1,303 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+
+  <title></title>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=8" />
+  <link href="styles/default.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="scripts/login.js"></script>
+  <script type="text/javascript" src="scripts/validation.js"></script>
+  <script type="text/javascript" src="scripts/appsettings.js"></script>
+  <script type="text/javascript" src="scripts/advanced.js"></script>
+  <script type="text/javascript" src="jsolait/jsolait.js"></script>
+  <script type="text/javascript" src="scripts/common.js"></script>
+
+  <!--[if (lte IE 6)|(gte IE 8)]>
+  <style type="text/css">
+     #outer {height:100%;display:table;}
+  </style>
+  <![endif]-->
+
+</head>
+
+<body onload="InitAdvancedPage();">
+
+<div id="outer">
+    <div id="inner">
+        <div id="header"></div>
+
+        <div id="content">
+           	<div id="columnB"></div>
+
+        <!-- START PAGE CONTENT -->
+        
+        <div id="columnA">
+		<h2>Advanced Settings</h2>
+		
+		<table><tr><td>
+		
+		<table cellpadding="0" cellspacing="0" class="containerDiv" width="460px">
+		<tr>
+			<td colspan="2" align="left">
+				<table width="100%" cellpadding="0" cellspacing="0">
+					<tr>								
+						<td class="windowHeader">Sections/variables</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td class="spacer" colspan="2"></td>
+		</tr>
+        <tr>
+			<td class="labels" align="left" colspan="2">
+				Section &nbsp;..............&nbsp;
+				<select id="ddlSection" class="dropdown" onchange="PopulateVariables();" style="width:324px;"> <option /> </select>
+				<input type="text" id="txtSection" maxlength="50" class="inputText" style="display: none; width: 201px;"/>
+			</td>
+		</tr>
+		<tr>
+			<td class="labels" align="left" colspan="2">
+				Variable &nbsp;.............&nbsp;
+				<select id="ddlVariable" class="dropdown" onchange="PopulateVariableValue();" style="width:324px;"> <option /> </select>
+				<input type="text" id="txtVariable" maxlength="50" class="inputText" style="width: 320px; display: none;" />
+			</td>
+		</tr>
+		<tr>
+			<td class="labels" align="left" colspan="2">
+				Value &nbsp;.................&nbsp;
+                <input type="text" id="txtValue" maxlength="50" class="inputText" style="width: 319px;"/>
+			</td>
+		</tr>	
+		<tr>
+			<td class="spacer" colspan="2"></td>
+		</tr>
+		<tr>
+			<td colspan="2" align="left">
+				<table width="100%" cellpadding="0" cellspacing="0">
+					<tr>								
+						<td colspan='2' align='center'>
+						<input type="button" id="btnSetVariable" value='Set' class="button" onclick="SetVariable();" />
+						<input type="button" id="btnCancel" value='Cancel' class="button" onclick="ResetSectionsVariables();" />
+					</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" align="center">
+		      <span id="spnSetResult"></span>
+            </td>
+		</tr>
+
+		<tr>
+			<td class="labels" align="left" colspan="2" style="font-size :9px;">
+				*The associated application must be restarted for the new settings to take effect.
+			</td>
+		</tr>
+		
+		
+		<tr>
+			 <td colspan="2" align="left">
+				<table width="100%" cellpadding="0" cellspacing="0">
+					<tr>								
+						<td class="windowHeader">Restart</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+
+		<tr>
+			<td class="spacer" colspan="2"></td>
+		</tr>				
+		<tr>		  
+		  <td colspan="2" >
+          <table border="0" width="100%">            
+		    <tr>
+		     	<td style="width: 15%"></td>	
+			  	<td class="labels" style="width: 35%" >Applications</td>
+			  	<td><input type="button" id="btnRestartApp" value='Restart' class="buttonRestart" onclick="RestartApplications();" onblur="ClearOperationResults()" /></td>              
+		    </tr>
+		    <tr>
+		    	<td style="width: 15%"></td>
+		    	<td class="labels" style="width: 35%">VR910 Hardware</td>
+		    	<td><input type="button" id="btnRestartVR900" value='Restart' class="buttonRestart" onclick="RestartVR900();" onblur="ClearOperationResults()" /></td>
+		    </tr>
+          </table>
+		  </td>
+		</tr>
+		<tr>
+			<td class="spacer" colspan="2"></td>
+		</tr>	
+		<tr>
+			<td colspan="2" align="center">
+		      <span id="spnRestartResult"></span>
+            </td>
+		</tr>
+    	<tr>
+			<td class="labels" align="left" colspan="2" style="font-size :9px;">
+				*After a restart the VR910 Monitoring Control System becomes inoperable for a few minutes.
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" align="left">
+				<table width="100%" cellpadding="0" cellspacing="0">
+					<tr>								
+						<td class="windowHeader">VR910 Settings</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td class="spacer" colspan="2"></td>
+		</tr>				
+		<tr>
+			<td class="labels" align="left">
+				IP &nbsp;.......................................&nbsp;
+			</td>
+			<td align="left">
+				<input type="text" id="txtIP" maxlength="50" class="inputText"/>
+			</td>
+		</tr>
+		<tr>
+			<td class="labels" align="left">
+                Gateway &nbsp;.............................&nbsp;
+			</td>
+			<td align="left">
+				<input type="text" id="txtGateway" maxlength="50" class="inputText"/>
+			</td>
+		</tr>
+		<tr>
+			<td class="labels" align="left">
+				Mask &nbsp;..................................&nbsp;
+			</td>
+			<td align="left">
+				<input type="text" id="txtMask" maxlength="50" class="inputText"/>
+			</td>
+		</tr>	
+		<tr>
+            <td class="labels" align="left">
+                MAC0 &nbsp;...................................&nbsp;
+            </td>
+            <td align="left">
+                <input type="text" id="txtMAC0" maxlength="12" class="inputText" disabled="true"/>
+                <input type="checkbox" id="ckMAC" onclick="EditMAC()" style="vertical-align:top;"/>
+                <span class="labels" id="spnUpdateMac" style="padding:  2px 0px 2px 1px">Update MAC</span>
+            </td>
+        </tr>   
+        <tr>
+            <td class="labels" align="left">
+                MAC1 &nbsp;...................................&nbsp;
+            </td>
+            <td align="left">
+                <input type="text" id="txtMAC1" maxlength="12" class="inputText" disabled="true"/>
+            </td>
+        </tr> 
+		<tr class="spacer"></tr>
+        <tr valign="top">
+    	    <td class="labels" align="left" >
+		        Name Servers &nbsp;.....................&nbsp;
+	        </td>
+	        <td>
+	            <table cellpadding="0" cellspacing="0" >
+	                <tr >
+	                    <td>
+		                    <select id="lstNameServers" size="3" class="inputText" onchange="SelectNameServer()" style="width:154px"> <option /> </select>
+	                    </td>
+                        <td>
+   	                        <input type="button" id="btnDeleteNameServer" value='Delete' class="buttonSimple" onclick="DeleteServerName();"/>
+   	                    </td>    
+   	                </tr>	
+   	                
+                    <tr>
+                        <td>
+            	            <input type="text" id="txtNameServer" maxlength="15" class="inputText" style="width:149px"/>
+			            </td>
+                        <td>
+                           <input type="button" id="btnSaveNameServer" value='Add' class="buttonSimple" onclick="SaveServerName();" />			 
+                        </td>
+                    </tr>		
+   	            </table>    
+   	        </td>
+        </tr>
+        <tr class="spacer"></tr>
+        <tr valign="top">
+    	    <td class="labels" align="left" >
+		        NTP Servers &nbsp;........................&nbsp;
+	        </td>
+	        <td>
+	            <table cellpadding="0" cellspacing="0" border="0">
+	                <tr >
+	                    <td>
+		                    <select id="lstNTPServers" size="3" class="inputText" onchange="SelectNTPServer()" style="width:154px"> <option /> </select>
+	                    </td>
+                        <td>
+   	                        <input type="button" id="btnDeleteNTPServer" value='Delete' class="buttonSimple" onclick="DeleteNTPServer();"/>
+   	                    </td>    
+   	                </tr>	
+   	                
+                    <tr>
+                        <td>
+            	            <input type="text" id="txtNTPServer" maxlength="15" class="inputText" style="width:149px"/>
+			            </td>
+                        <td>
+                           <input type="button" id="btnSaveNTPServer" value='Add' class="buttonSimple" onclick="SaveNTPServer();" />			 
+                        </td>
+                    </tr>		
+   	            </table>    
+   	        </td>
+        </tr>
+			
+		<tr>
+			<td class="spacer" colspan="2"></td>
+		</tr>
+		<tr>
+			<td colspan="2" align="left">
+				<table width="100%" cellpadding="0" cellspacing="0">
+					<tr>								
+						<td colspan='2' align='center'>
+						<input type="button" id="btnSave" value="Save" class="button" onclick="SetVR900Settings();" onblur="ClearOperationResults()" />
+						<input type="button" id="btnCancel" value="Cancel" class="button" onclick="GetVR900Settings();" />
+					</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" align="center">
+		      <span id="spnOperationResult"></span>
+            </td>
+		</tr>
+ 	    <tr>
+			<td class="spacer" colspan="2"></td>
+		</tr>
+		<tr>
+			<td class="labels" align="left" colspan="2" style="font-size :9px;">
+				*The board must be restarted for the new settings to take effect. If the IP address is changed, 
+                after reset the board will be accessible with the new IP and will no longer be reachable at the previous IP.
+			</td>
+		</tr>
+		</table>
+		
+		</td></tr>
+		
+	    <tr>
+			<td class="spacer" colspan="2"></td>
+		</tr>
+		
+		</table>
+		
+    	</div>
+		  	
+        <!-- END PAGE CONTENT -->
+
+        </div>
+    </div>
+</div>
+
+<div id="footer"></div>
+
+</body>
+</html>
